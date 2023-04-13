@@ -7,8 +7,8 @@ import com.sleepwell.userapi.room.service.AccommodationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class AccommodationController {
      * 원하는 방 목록 조회 기능
      */
     @GetMapping
-    public List<AccommodationInfoDto> searchRooms(@RequestParam AccommodationSearchDto accommodationSearchDto) {
+    public List<AccommodationInfoDto> searchRooms(@RequestBody AccommodationSearchDto accommodationSearchDto) {
         return accommodationService.findRooms(accommodationSearchDto);
     }
 
