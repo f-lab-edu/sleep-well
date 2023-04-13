@@ -5,7 +5,9 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class ReservationRequestDto {
+public class ReservationDetailInfoDto {
+
+    private Long reservationId;
 
     private Long accommodationId;
 
@@ -19,5 +21,5 @@ public class ReservationRequestDto {
 
     private String checkOutDate;
 
-    private String guests;
+    private Integer guests;
 }
