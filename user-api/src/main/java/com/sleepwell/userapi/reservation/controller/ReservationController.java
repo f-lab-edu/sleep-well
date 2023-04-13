@@ -4,17 +4,15 @@ import com.sleepwell.userapi.reservation.dto.ReservationInfoDto;
 import com.sleepwell.userapi.reservation.dto.ReservationRequestDto;
 import com.sleepwell.userapi.reservation.service.ReservationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/reservation")
@@ -46,7 +44,7 @@ public class ReservationController {
      * 단일 예약 정보 조회
      */
     @GetMapping("/{reservationId}")
-    public Optional<ReservationInfoDto> getReservation(@PathVariable(name = "reservationId") Long reservationId) {
+    public ReservationInfoDto getReservation(@PathVariable(name = "reservationId") Long reservationId) {
         return reservationService.getReservation(reservationId);
     }
 
@@ -54,8 +52,7 @@ public class ReservationController {
      * 예약 취소
      */
     @DeleteMapping("{reservationId}")
-    public ResponseEntity<String> deleteReservation(@PathVariable(name = "reservationId") String reservationId) {
-        reservationService.deleteReservation(reservationId);
-        return ResponseEntity.ok("Ok");
+    public ReservationInfoDto deleteReservation(@PathVariable(name = "reservationId") Long reservationId) {
+        return reservationService.deleteReservation(reservationId);
     }
 }
