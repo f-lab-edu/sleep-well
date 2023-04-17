@@ -22,7 +22,7 @@ public class ReservationController {
      * 숙소 예약 기능
      */
     @PostMapping
-    public ReservationDetailInfoDto reservation(@RequestBody ReservationRequestDto reservationRequestDto) {
+    public ReservationDetailInfoDto createReservation(@RequestBody ReservationRequestDto reservationRequestDto) {
         return reservationService.createReservation(reservationRequestDto);
     }
 
