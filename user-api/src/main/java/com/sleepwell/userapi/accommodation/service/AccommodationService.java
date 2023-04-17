@@ -1,8 +1,8 @@
-package com.sleepwell.userapi.room.service;
+package com.sleepwell.userapi.accommodation.service;
 
-import com.sleepwell.userapi.room.dto.AccommodationDetailInfoDto;
-import com.sleepwell.userapi.room.dto.AccommodationInfoDto;
-import com.sleepwell.userapi.room.dto.AccommodationSearchDto;
+import com.sleepwell.userapi.accommodation.dto.AccommodationDetailInfoDto;
+import com.sleepwell.userapi.accommodation.dto.AccommodationInfoDto;
+import com.sleepwell.userapi.accommodation.dto.AccommodationSearchDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class AccommodationService {
-    public List<AccommodationInfoDto> findRooms(AccommodationSearchDto accommodationSearchDto) {
+    public List<AccommodationInfoDto> findAccommodation(AccommodationSearchDto accommodationSearchDto) {
         //repository.findBy~~
         return List.of(AccommodationInfoDto.builder()
                 .accommodationName("숙소 이름")
@@ -19,7 +19,7 @@ public class AccommodationService {
                 .build());
     }
 
-    public AccommodationDetailInfoDto findRoom(Long accommodationId) {
+    public AccommodationDetailInfoDto getAccommodation(Long accommodationId) {
         //repository.findById
         Optional<AccommodationDetailInfoDto> accommodationInfo = Optional.ofNullable(AccommodationDetailInfoDto.builder()
                 .accommodationId(accommodationId)

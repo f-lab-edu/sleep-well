@@ -1,4 +1,4 @@
-package com.sleepwell.userapi.room.dto;
+package com.sleepwell.userapi.accommodation.dto;
 
 import lombok.Builder;
 import lombok.Getter;
