@@ -9,9 +9,13 @@ public class ReservationRequestDto {
 
     private Long accommodationId;
 
+    private Long guestId;
+
     private String accommodationName;
 
-    private String type;
+    private String paymentType;
+
+    private String accommodationType;
 
     private String location;
 

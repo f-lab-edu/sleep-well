@@ -26,10 +26,18 @@ public class ReservationController {
                 .reservationId(1L)
                 .accommodationId(1L)
                 .accommodationName("숙소 이름")
-                .type("아파트")
+                .hostName("호스트 이름")
+                .guestName("예약자 이름")
+                .price(1_000_000)
+                .paymentType("결제 타입")
+                .accommodationType("아파트")
+                .location("지역")
                 .checkInDate("2023-08-01")
                 .checkOutDate("2023-08-04")
+                .checkInTime("15:00")
+                .checkOutTime("13:00")
                 .guests(4)
+                .reservationStatus("예약 상태")
                 .build();
     }
 
@@ -44,10 +52,18 @@ public class ReservationController {
                 .reservationId(reservationId)
                 .accommodationId(1L)
                 .accommodationName("숙소 이름")
-                .type("아파트")
+                .hostName("호스트 이름")
+                .guestName("예약자 이름")
+                .price(1_000_000)
+                .paymentType("결제 타입")
+                .accommodationType("아파트")
+                .location("지역")
                 .checkInDate("2023-08-01")
                 .checkOutDate("2023-08-04")
+                .checkInTime("15:00")
+                .checkOutTime("13:00")
                 .guests(4)
+                .reservationStatus("예약 상태")
                 .build();
     }
 }
