@@ -7,33 +7,33 @@ import lombok.Getter;
 @Builder
 public class ReservationDetailInfoDto {
 
-    private Long reservationId;
+    private final Long reservationId;
 
-    private Long accommodationId;
+    private final Long accommodationId;
 
-    private String accommodationName;
+    private final String accommodationName;
 
-    private String hostName;
+    private final String hostName;
 
-    private String guestName;
+    private final String guestName;
 
-    private int price;
+    private final int price;
 
-    private String paymentType;
+    private final String paymentType;
 
-    private String accommodationType;
+    private final String accommodationType;
 
-    private String location;
+    private final String location;
 
-    private String checkInDate;
+    private final String checkInDate;
 
-    private String checkOutDate;
+    private final String checkOutDate;
 
-    private String checkInTime;
+    private final String checkInTime;
 
-    private String checkOutTime;
+    private final String checkOutTime;
 
-    private Integer guests;
+    private final int guests;
 
-    private String reservationStatus;
+    private final String reservationStatus;
 }

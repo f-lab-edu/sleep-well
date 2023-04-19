@@ -7,21 +7,21 @@ import lombok.Getter;
 @Builder
 public class ReservationRequestDto {
 
-    private Long accommodationId;
+    private final Long accommodationId;
 
-    private Long guestId;
+    private final Long guestId;
 
-    private String accommodationName;
+    private final String accommodationName;
 
-    private String paymentType;
+    private final String paymentType;
 
-    private String accommodationType;
+    private final String accommodationType;
 
-    private String location;
+    private final String location;
 
-    private String checkInDate;
+    private final String checkInDate;
 
-    private String checkOutDate;
+    private final String checkOutDate;
 
-    private String guests;
+    private final String guests;
 }
