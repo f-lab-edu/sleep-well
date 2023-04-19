@@ -27,7 +27,8 @@ public class AccommodationController {
         return List.of(AccommodationInfoDto.builder()
                 .accommodationName("숙소 이름")
                 .location("지역")
-                .type("숙소 타입")
+                .accommodationType("숙소 타입")
+                .price(1)
                 .build());
     }
 
@@ -40,11 +41,15 @@ public class AccommodationController {
         return AccommodationDetailInfoDto.builder()
                 .accommodationId(accommodationId)
                 .accommodationName("숙소 이름")
-                .type("숙소 타입")
+                .price(1_000_000)
+                .accommodationType("숙소 타입")
                 .location("지역")
                 .checkInDate("2023-08-01")
                 .checkOutDate("2023-08-01")
-                .guests(5)
+                .checkInTime("15:00")
+                .checkOutTime("13:00")
+                .maximumNumberOfGuest(5)
+                .description("세부 설명")
                 .build();
     }
 }

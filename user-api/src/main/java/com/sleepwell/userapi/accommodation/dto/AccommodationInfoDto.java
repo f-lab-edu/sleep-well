@@ -9,7 +9,12 @@ public class AccommodationInfoDto {
 
     private String accommodationName;
 
-    private String type;
+    private String accommodationType;
+
+    private int price;
 
     private String location;
+
+    private int maximumNumberOfGuest;
+
 }

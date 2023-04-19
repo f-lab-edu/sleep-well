@@ -11,7 +11,9 @@ public class AccommodationDetailInfoDto {
 
     private String accommodationName;
 
-    private String type;
+    private int price;
+
+    private String accommodationType;
 
     private String location;
 
@@ -19,5 +21,12 @@ public class AccommodationDetailInfoDto {
 
     private String checkOutDate;
 
-    private Integer guests;
+    private String checkInTime;
+
+    private String checkOutTime;
+
+    private Integer maximumNumberOfGuest;
+
+    private String description;
+
 }
