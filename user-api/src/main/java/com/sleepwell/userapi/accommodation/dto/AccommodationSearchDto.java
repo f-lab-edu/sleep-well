@@ -7,19 +7,20 @@ import lombok.Getter;
 @Builder
 public class AccommodationSearchDto {
 
-    private String accommodationName;
+    private final String accommodationName;
 
-    private String accommodationType;
+    private final String accommodationType;
 
-    private String location;
+    private final String location;
 
-    private String checkInDate;
+    private final String checkInDate;
 
-    private String checkOutDate;
+    private final String checkOutDate;
 
-    private int minPrice;
+    private final int minPrice;
 
-    private int maxPrice;
+    private final int maxPrice;
 
-    private int guests;
+    private final int guests;
+
 }
