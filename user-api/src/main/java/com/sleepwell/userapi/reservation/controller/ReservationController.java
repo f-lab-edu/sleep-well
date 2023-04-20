@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-
 @RestController
 @RequestMapping("/reservation")
 @RequiredArgsConstructor
@@ -36,23 +34,7 @@ public class ReservationController {
      */
     @GetMapping("/{reservationId}")
     public ReservationDetailInfoDto getReservation(@PathVariable(name = "reservationId") Long reservationId) {
-        // entity = reservationService.getReservation(reservationId);
-        return ReservationDetailInfoDto.builder()
-                .reservationId(reservationId)
-                .accommodationId(1L)
-                .accommodationName("숙소 이름")
-                .hostName("호스트 이름")
-                .guestName("예약자 이름")
-                .price(1_000_000)
-                .paymentType("결제 타입")
-                .accommodationType("아파트")
-                .location("지역")
-                .checkInDate(LocalDate.of(2023, 8, 1))
-                .checkOutDate(LocalDate.of(2023, 8, 4))
-                .checkInTime("15:00")
-                .checkOutTime("13:00")
-                .guests(4)
-                .reservationStatus("예약 상태")
-                .build();
+        Reservation reservation = reservationService.getReservation(reservationId);
+        return reservation.toReservationDetailInfoDto();
     }
 }

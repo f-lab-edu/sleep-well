@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +31,12 @@ public class ReservationService {
         return reservation;
     }
 
+    public Reservation getReservation(Long reservationId) {
+        Optional<Reservation> findReservation = reservationRepository.findById(reservationId);
+
+        return findReservation.orElseThrow(() -> new RuntimeException("존재하지 않는 예약 정보입니다."));
+    }
+
     private void checkIsValidReservationDate(Long accommodationId, LocalDate checkInDate, LocalDate checkOutDate) {
         if (reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(accommodationId, checkInDate, checkOutDate)) {
             throw new RuntimeException("해당 일자는 예약이 불가합니다.");
@@ -41,5 +48,4 @@ public class ReservationService {
             throw new RuntimeException("최대 숙박 가능 인원을 초과하였습니다.");
         }
     }
-
 }
