@@ -1,7 +1,11 @@
 package com.sleepwell.userapi.reservation.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sleepwell.userapi.reservation.entity.Reservation;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.time.LocalDate;
 
 @Getter
 @Builder
@@ -19,9 +23,20 @@ public class ReservationRequestDto {
 
     private final String location;
 
-    private final String checkInDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd", timezone = "Asia/Seoul")
+    private final LocalDate checkInDate;
 
-    private final String checkOutDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd", timezone = "Asia/Seoul")
+    private final LocalDate checkOutDate;
 
-    private final String guests;
+    private final int numberOfGuest;
+
+    public Reservation toEntity() {
+        return Reservation.builder()
+                .paymentType(paymentType)
+                .checkInDate(checkInDate)
+                .checkOutDate(checkOutDate)
+                .numberOfGuest(numberOfGuest)
+                .build();
+    }
 }
