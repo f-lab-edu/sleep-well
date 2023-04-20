@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -56,8 +57,6 @@ class ReservationServiceTest {
                 .checkOutDate(LocalDate.of(2023, 4, 22))
                 .numberOfGuest(1000)
                 .build();
-
-        when(memberRepository.findById(any())).thenReturn(member);
     }
 
     @DisplayName("예약 일자 사이에 이미 예약이 있다면 예약 불가")
@@ -66,6 +65,7 @@ class ReservationServiceTest {
         //given
         when(reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(true);
         when(accommodationRepository.findById(any())).thenReturn(accommodation);
+        when(memberRepository.findById(any())).thenReturn(member);
 
         //then
         assertThrows(RuntimeException.class, () -> reservationService.createReservation(reservation, 1L, 1L));
@@ -77,6 +77,7 @@ class ReservationServiceTest {
         //given
         when(reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
         when(accommodationRepository.findById(any())).thenReturn(accommodation);
+        when(memberRepository.findById(any())).thenReturn(member);
 
         //when
         reservation.setNumberOfGuest(accommodation.getMaximumNumberOfGuest() + 1);
@@ -85,15 +86,36 @@ class ReservationServiceTest {
         assertThrows(RuntimeException.class, () -> reservationService.createReservation(reservation, 1L, 1L));
     }
 
-    @DisplayName("정상 요청 시 예약 정보 반환")
+    @DisplayName("정상 예약 생성 요청 시 예약 정보 반환")
     @Test
     void createReservationWithValidCheckInDate() {
         //given
         when(reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
         when(accommodationRepository.findById(any())).thenReturn(accommodation);
+        when(memberRepository.findById(any())).thenReturn(member);
 
         //then
         assertEquals(reservationService.createReservation(reservation, 1L, 1L), reservation);
+    }
+
+    @DisplayName("존재하지 않는 예약 정보 조회 시 예외 발생")
+    @Test
+    void getReservationWithInValidReservationId() {
+        //given
+        when(reservationRepository.findById(any())).thenReturn(Optional.empty());
+
+        //then
+        assertThrows(RuntimeException.class, () -> reservationService.getReservation(1L));
+    }
+
+    @DisplayName("정상 조회 요청 시 예약 정보 반환")
+    @Test
+    void getReservationWithValidReservationId() {
+        //given
+        when(reservationRepository.findById(any())).thenReturn(Optional.of(reservation));
+
+        //then
+        assertEquals(reservation, reservationService.getReservation(1L));
     }
 
 }
