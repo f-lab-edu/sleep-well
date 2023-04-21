@@ -30,7 +30,6 @@ class AccommodationServiceTest {
     @Test
     void findAccommodationWithInvalidAccommodationId() {
         //given
-        Accommodation mockAccommodation = mock(Accommodation.class);
         when(accommodationRepository.findById(any())).thenReturn(Optional.empty());
 
         //then
