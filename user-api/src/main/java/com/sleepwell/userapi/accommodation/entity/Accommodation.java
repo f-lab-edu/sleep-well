@@ -1,5 +1,6 @@
 package com.sleepwell.userapi.accommodation.entity;
 
+import com.sleepwell.userapi.accommodation.dto.AccommodationInfoDto;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import lombok.Builder;
@@ -15,7 +16,7 @@ public class Accommodation {
 
     private Long id;
 
-    private String name;
+    private String accommodationName;
 
     private int price;
 
@@ -40,8 +41,8 @@ public class Accommodation {
     private List<Reservation> reservations = new ArrayList<>();
 
     @Builder
-    public Accommodation(String name, int price, String accommodationType, String location, String checkInDate, String checkOutDate, String checkInTime, String checkOutTime, int maximumNumberOfGuest, String description) {
-        this.name = name;
+    public Accommodation(String accommodationName, int price, String accommodationType, String location, String checkInDate, String checkOutDate, String checkInTime, String checkOutTime, int maximumNumberOfGuest, String description) {
+        this.accommodationName = accommodationName;
         this.price = price;
         this.accommodationType = accommodationType;
         this.location = location;
@@ -51,5 +52,15 @@ public class Accommodation {
         this.checkOutTime = checkOutTime;
         this.maximumNumberOfGuest = maximumNumberOfGuest;
         this.description = description;
+    }
+
+    public AccommodationInfoDto toAccommodationInfoDto() {
+        return AccommodationInfoDto.builder()
+                .accommodationName(this.accommodationName)
+                .accommodationType(this.accommodationType)
+                .price(this.price)
+                .location(this.location)
+                .maximumNumberOfGuest(this.maximumNumberOfGuest)
+                .build();
     }
 }

@@ -3,6 +3,8 @@ package com.sleepwell.userapi.accommodation.dto;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDate;
+
 @Getter
 @Builder
 public class AccommodationSearchDto {
@@ -13,14 +15,14 @@ public class AccommodationSearchDto {
 
     private final String location;
 
-    private final String checkInDate;
+    private final LocalDate checkInDate;
 
-    private final String checkOutDate;
+    private final LocalDate checkOutDate;
 
-    private final int minPrice;
+    private final Integer minPrice;
 
-    private final int maxPrice;
+    private final Integer maxPrice;
 
-    private final int guests;
+    private final Integer numberOfGuest;
 
 }

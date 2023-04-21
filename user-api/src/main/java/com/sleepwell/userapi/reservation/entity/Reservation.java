@@ -48,7 +48,7 @@ public class Reservation {
         return ReservationDetailInfoDto.builder()
                 .reservationId(this.id)
                 .accommodationId(this.accommodation.getId())
-                .accommodationName(this.accommodation.getName())
+                .accommodationName(this.accommodation.getAccommodationName())
                 .hostName(this.accommodation.getHost().getName())
                 .guestName(this.guest.getName())
                 .price(this.accommodation.getPrice())
