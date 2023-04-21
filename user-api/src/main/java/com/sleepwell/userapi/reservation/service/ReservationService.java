@@ -1,7 +1,7 @@
 package com.sleepwell.userapi.reservation.service;
 
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
-import com.sleepwell.userapi.accommodation.repository.AccommodationRepository;
+import com.sleepwell.userapi.accommodation.service.AccommodationService;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.member.repository.MemberRepository;
 import com.sleepwell.userapi.reservation.entity.Reservation;
@@ -17,11 +17,11 @@ import java.util.Optional;
 public class ReservationService {
 
     private final MemberRepository memberRepository;
-    private final AccommodationRepository accommodationRepository;
+    private final AccommodationService accommodationService;
     private final ReservationRepository reservationRepository;
 
     public Reservation createReservation(Reservation reservation, Long accommodationId, Long guestId) {
-        Accommodation accommodation = accommodationRepository.findById(accommodationId);
+        Accommodation accommodation = accommodationService.getAccommodation(accommodationId);
         Member guest = memberRepository.findById(guestId);
 
         checkIsValidReservationDate(accommodationId, reservation.getCheckInDate(), reservation.getCheckOutDate());

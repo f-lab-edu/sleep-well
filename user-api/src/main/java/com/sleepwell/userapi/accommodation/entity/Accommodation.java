@@ -1,5 +1,6 @@
 package com.sleepwell.userapi.accommodation.entity;
 
+import com.sleepwell.userapi.accommodation.dto.AccommodationDetailInfoDto;
 import com.sleepwell.userapi.accommodation.dto.AccommodationInfoDto;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.reservation.entity.Reservation;
@@ -61,6 +62,22 @@ public class Accommodation {
                 .price(this.price)
                 .location(this.location)
                 .maximumNumberOfGuest(this.maximumNumberOfGuest)
+                .build();
+    }
+
+    public AccommodationDetailInfoDto toAccommodationDetailInfo() {
+        return AccommodationDetailInfoDto.builder()
+                .accommodationId(this.id)
+                .accommodationName(this.accommodationName)
+                .price(this.price)
+                .accommodationType(this.accommodationType)
+                .location(this.location)
+                .checkInDate(this.checkInDate)
+                .checkOutDate(this.checkOutDate)
+                .checkInTime(this.checkInTime)
+                .checkOutTime(checkOutTime)
+                .maximumNumberOfGuest(this.maximumNumberOfGuest)
+                .description(this.description)
                 .build();
     }
 }

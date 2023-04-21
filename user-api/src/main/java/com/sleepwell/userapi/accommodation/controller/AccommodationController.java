@@ -37,19 +37,7 @@ public class AccommodationController {
      */
     @GetMapping("/{accommodationId}")
     public AccommodationDetailInfoDto getAccommodation(@PathVariable(name = "accommodationId") Long accommodationId) {
-        // entity = accommodationService.getAccommodation(accommodationId);
-        return AccommodationDetailInfoDto.builder()
-                .accommodationId(accommodationId)
-                .accommodationName("숙소 이름")
-                .price(1_000_000)
-                .accommodationType("숙소 타입")
-                .location("지역")
-                .checkInDate("2023-08-01")
-                .checkOutDate("2023-08-01")
-                .checkInTime("15:00")
-                .checkOutTime("13:00")
-                .maximumNumberOfGuest(5)
-                .description("세부 설명")
-                .build();
+         Accommodation accommodation = accommodationService.getAccommodation(accommodationId);
+        return accommodation.toAccommodationDetailInfo();
     }
 }

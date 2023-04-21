@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,4 +19,9 @@ public class AccommodationService {
         return accommodationRepository.findAllByAccommodationSearchDto(accommodationSearchDto);
     }
 
+    public Accommodation getAccommodation(Long accommodationId) {
+        Optional<Accommodation> accommodation = accommodationRepository.findById(accommodationId);
+
+        return accommodation.orElseThrow(() -> new RuntimeException("존재하지 않는 숙소입니다."));
+    }
 }

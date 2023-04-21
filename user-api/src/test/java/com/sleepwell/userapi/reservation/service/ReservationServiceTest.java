@@ -1,7 +1,7 @@
 package com.sleepwell.userapi.reservation.service;
 
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
-import com.sleepwell.userapi.accommodation.repository.AccommodationRepository;
+import com.sleepwell.userapi.accommodation.service.AccommodationService;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.member.repository.MemberRepository;
 import com.sleepwell.userapi.reservation.entity.Reservation;
@@ -29,10 +29,10 @@ class ReservationServiceTest {
     private MemberRepository memberRepository;
 
     @Mock
-    private AccommodationRepository accommodationRepository;
+    private ReservationRepository reservationRepository;
 
     @Mock
-    private ReservationRepository reservationRepository;
+    private AccommodationService accommodationService;
 
     @InjectMocks
     private ReservationService reservationService;
@@ -64,7 +64,7 @@ class ReservationServiceTest {
     void createReservationWithInvalidCheckInDate() {
         //given
         when(reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(true);
-        when(accommodationRepository.findById(any())).thenReturn(accommodation);
+        when(accommodationService.getAccommodation(any())).thenReturn(accommodation);
         when(memberRepository.findById(any())).thenReturn(member);
 
         //then
@@ -76,7 +76,7 @@ class ReservationServiceTest {
     void createReservationWithInvalidNumberOfGuest() {
         //given
         when(reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
-        when(accommodationRepository.findById(any())).thenReturn(accommodation);
+        when(accommodationService.getAccommodation(any())).thenReturn(accommodation);
         when(memberRepository.findById(any())).thenReturn(member);
 
         //when
@@ -91,7 +91,7 @@ class ReservationServiceTest {
     void createReservationWithValidCheckInDate() {
         //given
         when(reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
-        when(accommodationRepository.findById(any())).thenReturn(accommodation);
+        when(accommodationService.getAccommodation(any())).thenReturn(accommodation);
         when(memberRepository.findById(any())).thenReturn(member);
 
         //then
