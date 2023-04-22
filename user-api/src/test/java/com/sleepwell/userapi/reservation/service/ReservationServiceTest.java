@@ -91,6 +91,7 @@ class ReservationServiceTest {
     void createReservationWithValidCheckInDate() {
         //given
         when(reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
+        when(reservationRepository.save(any())).thenReturn(reservation);
         when(accommodationService.getAccommodation(any())).thenReturn(accommodation);
         when(memberRepository.findById(any())).thenReturn(member);
 

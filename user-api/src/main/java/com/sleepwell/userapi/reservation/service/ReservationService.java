@@ -28,7 +28,7 @@ public class ReservationService {
         checkIsValidNumberOfGuest(reservation, accommodation);
 
         reservation.createReservation(guest, accommodation);
-        return reservation;
+        return reservationRepository.save(reservation);
     }
 
     public Reservation getReservation(Long reservationId) {
