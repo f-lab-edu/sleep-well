@@ -42,7 +42,7 @@ public class Accommodation {
     private List<Reservation> reservations = new ArrayList<>();
 
     @Builder
-    public Accommodation(String accommodationName, int price, String accommodationType, String location, String checkInDate, String checkOutDate, String checkInTime, String checkOutTime, int maximumNumberOfGuest, String description) {
+    private Accommodation(String accommodationName, int price, String accommodationType, String location, String checkInDate, String checkOutDate, String checkInTime, String checkOutTime, int maximumNumberOfGuest, String description) {
         this.accommodationName = accommodationName;
         this.price = price;
         this.accommodationType = accommodationType;

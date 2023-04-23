@@ -30,7 +30,7 @@ public class Reservation {
     private Accommodation accommodation;
 
     @Builder
-    public Reservation(String paymentType, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuest) {
+    private Reservation(String paymentType, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuest) {
         this.paymentType = paymentType;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
