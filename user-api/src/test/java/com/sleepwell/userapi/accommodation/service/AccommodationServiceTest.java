@@ -36,7 +36,7 @@ class AccommodationServiceTest {
         assertThrows(RuntimeException.class, () -> accommodationService.getAccommodation(1L));
     }
 
-    @DisplayName("유효한 숙소 조회 시 예외 발생")
+    @DisplayName("유효한 숙소 조회 시 숙소 반환")
     @Test
     void findAccommodationWithValidAccommodationId() {
         //given
