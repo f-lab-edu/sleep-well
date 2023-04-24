@@ -37,7 +37,7 @@ public class Reservation {
         this.numberOfGuest = numberOfGuest;
     }
 
-    public void createReservation(Member guest, Accommodation accommodation) {
+    public void updateReservation(Member guest, Accommodation accommodation) {
         this.setGuest(guest);
         this.setAccommodation(accommodation);
         guest.getReservations().add(this);

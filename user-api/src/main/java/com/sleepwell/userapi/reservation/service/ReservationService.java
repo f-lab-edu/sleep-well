@@ -27,7 +27,7 @@ public class ReservationService {
         checkIsValidReservationDate(accommodationId, reservation.getCheckInDate(), reservation.getCheckOutDate());
         checkIsValidNumberOfGuest(reservation, accommodation);
 
-        reservation.createReservation(guest, accommodation);
+        reservation.updateReservation(guest, accommodation);
         return reservationRepository.save(reservation);
     }
 
