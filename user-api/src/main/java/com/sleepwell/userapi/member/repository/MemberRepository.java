@@ -1,9 +1,13 @@
 package com.sleepwell.userapi.member.repository;
 
 import com.sleepwell.userapi.member.entity.Member;
+import org.springframework.stereotype.Repository;
 
-public interface MemberRepository {
+@Repository
+public class MemberRepository {
 
-    Member findById(Long guestId);
+    public Member findById(Long guestId) {
+        return new Member();
+    }
 
 }
