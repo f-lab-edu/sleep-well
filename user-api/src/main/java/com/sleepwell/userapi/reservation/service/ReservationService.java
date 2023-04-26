@@ -9,7 +9,6 @@ import com.sleepwell.userapi.reservation.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -24,8 +23,12 @@ public class ReservationService {
         Accommodation accommodation = accommodationService.getAccommodation(accommodationId);
         Member guest = memberRepository.findById(guestId);
 
-        checkIsValidReservationDate(accommodationId, reservation.getCheckInDate(), reservation.getCheckOutDate());
-        checkIsValidNumberOfGuest(reservation, accommodation);
+        if (reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(accommodationId, reservation.getCheckInDate(), reservation.getCheckOutDate())) {
+            throw new RuntimeException("해당 일자는 예약이 불가합니다.");
+        }
+        if (accommodation.getMaximumNumberOfGuest() < reservation.getNumberOfGuest()) {
+            throw new RuntimeException("최대 숙박 가능 인원을 초과하였습니다.");
+        }
 
         reservation.updateReservation(guest, accommodation);
         return reservationRepository.save(reservation);
@@ -35,17 +38,5 @@ public class ReservationService {
         Optional<Reservation> findReservation = reservationRepository.findById(reservationId);
 
         return findReservation.orElseThrow(() -> new RuntimeException("존재하지 않는 예약 정보입니다."));
-    }
-
-    private void checkIsValidReservationDate(Long accommodationId, LocalDate checkInDate, LocalDate checkOutDate) {
-        if (reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(accommodationId, checkInDate, checkOutDate)) {
-            throw new RuntimeException("해당 일자는 예약이 불가합니다.");
-        }
-    }
-
-    private static void checkIsValidNumberOfGuest(Reservation reservation, Accommodation accommodation) {
-        if (accommodation.getMaximumNumberOfGuest() < reservation.getNumberOfGuest()) {
-            throw new RuntimeException("최대 숙박 가능 인원을 초과하였습니다.");
-        }
     }
 }
