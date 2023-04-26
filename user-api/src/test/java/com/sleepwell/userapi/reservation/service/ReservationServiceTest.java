@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,16 +48,9 @@ class ReservationServiceTest {
     void setup() {
         member = new Member();
 
-        accommodation = Accommodation.builder()
-                .maximumNumberOfGuest(1000)
-                .build();
+        accommodation = new Accommodation("숙소 이름", 1_000_000, "숙소 타입", "지역", LocalDate.of(2023, 4, 24), LocalDate.of(2023, 4, 25), LocalTime.of(15, 0), LocalTime.of(11, 0), 10, "상세 정보");
 
-        reservation = Reservation.builder()
-                .paymentType("지불 타입")
-                .checkInDate(LocalDate.of(2023, 4, 20))
-                .checkOutDate(LocalDate.of(2023, 4, 22))
-                .numberOfGuest(1000)
-                .build();
+        reservation = new Reservation("지불 타입", LocalDate.of(2023, 4, 24), LocalDate.of(2023, 4, 24), 10);
     }
 
     @DisplayName("예약 일자 사이에 이미 예약이 있다면 예약 불가")

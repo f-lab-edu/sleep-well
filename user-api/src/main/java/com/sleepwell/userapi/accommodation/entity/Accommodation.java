@@ -4,10 +4,11 @@ import com.sleepwell.userapi.accommodation.dto.AccommodationDetailInfoDto;
 import com.sleepwell.userapi.accommodation.dto.AccommodationInfoDto;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.reservation.entity.Reservation;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +26,13 @@ public class Accommodation {
 
     private String location;
 
-    private String checkInDate;
+    private LocalDate checkInDate;
 
-    private String checkOutDate;
+    private LocalDate checkOutDate;
 
-    private String checkInTime;
+    private LocalTime checkInTime;
 
-    private String checkOutTime;
+    private LocalTime checkOutTime;
 
     private int maximumNumberOfGuest;
 
@@ -41,8 +42,7 @@ public class Accommodation {
 
     private List<Reservation> reservations = new ArrayList<>();
 
-    @Builder
-    private Accommodation(String accommodationName, int price, String accommodationType, String location, String checkInDate, String checkOutDate, String checkInTime, String checkOutTime, int maximumNumberOfGuest, String description) {
+    public Accommodation(String accommodationName, int price, String accommodationType, String location, LocalDate checkInDate, LocalDate checkOutDate, LocalTime checkInTime, LocalTime checkOutTime, int maximumNumberOfGuest, String description) {
         this.accommodationName = accommodationName;
         this.price = price;
         this.accommodationType = accommodationType;

@@ -1,42 +1,35 @@
 package com.sleepwell.userapi.reservation.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sleepwell.userapi.reservation.entity.Reservation;
-import lombok.Builder;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 @Getter
-@Builder
 public class ReservationRequestDto {
 
-    private final Long accommodationId;
+    private Long accommodationId;
 
-    private final Long guestId;
+    private Long guestId;
 
-    private final String accommodationName;
+    private String accommodationName;
 
-    private final String paymentType;
+    private String paymentType;
 
-    private final String accommodationType;
+    private String accommodationType;
 
-    private final String location;
+    private String location;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd", timezone = "Asia/Seoul")
-    private final LocalDate checkInDate;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private LocalDate checkInDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd", timezone = "Asia/Seoul")
-    private final LocalDate checkOutDate;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private LocalDate checkOutDate;
 
-    private final int numberOfGuest;
+    private int numberOfGuest;
 
     public Reservation toEntity() {
-        return Reservation.builder()
-                .paymentType(paymentType)
-                .checkInDate(checkInDate)
-                .checkOutDate(checkOutDate)
-                .numberOfGuest(numberOfGuest)
-                .build();
+        return new Reservation(this.paymentType, checkInDate, checkOutDate, numberOfGuest);
     }
 }

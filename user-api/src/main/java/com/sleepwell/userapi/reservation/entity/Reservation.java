@@ -3,7 +3,6 @@ package com.sleepwell.userapi.reservation.entity;
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.reservation.dto.ReservationDetailInfoDto;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,8 +28,7 @@ public class Reservation {
 
     private Accommodation accommodation;
 
-    @Builder
-    private Reservation(String paymentType, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuest) {
+    public Reservation(String paymentType, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuest) {
         this.paymentType = paymentType;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;

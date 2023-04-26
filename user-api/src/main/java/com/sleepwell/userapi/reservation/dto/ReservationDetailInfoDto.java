@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Builder
@@ -34,9 +35,11 @@ public class ReservationDetailInfoDto {
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private final LocalDate checkOutDate;
 
-    private final String checkInTime;
+    @DateTimeFormat(pattern = "hh:mm")
+    private final LocalTime checkInTime;
 
-    private final String checkOutTime;
+    @DateTimeFormat(pattern = "hh:mm")
+    private final LocalTime checkOutTime;
 
     private final int guests;
 
