@@ -16,7 +16,12 @@ public class AccommodationService {
     private final AccommodationRepository accommodationRepository;
 
     public List<Accommodation> findAccommodation(AccommodationSearchDto accommodationSearchDto) {
-        return accommodationRepository.findAllByAccommodationSearchDto(accommodationSearchDto);
+        List<Accommodation> accommodations = accommodationRepository.findAllByAccommodationSearchDto(accommodationSearchDto);
+
+        if (accommodations.isEmpty()) {
+            throw new RuntimeException("조건에 맞는 숙소가 존재하지 않습니다.");
+        }
+        return accommodations;
     }
 
     public Accommodation getAccommodation(Long accommodationId) {
