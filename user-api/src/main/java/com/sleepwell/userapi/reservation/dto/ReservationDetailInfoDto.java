@@ -2,6 +2,10 @@ package com.sleepwell.userapi.reservation.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Builder
@@ -25,13 +29,17 @@ public class ReservationDetailInfoDto {
 
     private final String location;
 
-    private final String checkInDate;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private final LocalDate checkInDate;
 
-    private final String checkOutDate;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private final LocalDate checkOutDate;
 
-    private final String checkInTime;
+    @DateTimeFormat(pattern = "hh:mm")
+    private final LocalTime checkInTime;
 
-    private final String checkOutTime;
+    @DateTimeFormat(pattern = "hh:mm")
+    private final LocalTime checkOutTime;
 
     private final int guests;
 
