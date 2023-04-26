@@ -1,29 +1,31 @@
 package com.sleepwell.userapi.accommodation.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 @Getter
+@AllArgsConstructor
 public class AccommodationSearchDto {
 
-    private String accommodationName;
+    private final String accommodationName;
 
-    private String accommodationType;
+    private final String accommodationType;
 
-    private String location;
-
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private LocalDate checkInDate;
+    private final String location;
 
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private LocalDate checkOutDate;
+    private final LocalDate checkInDate;
 
-    private Integer minPrice;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private final LocalDate checkOutDate;
 
-    private Integer maxPrice;
+    private final Integer minPrice;
 
-    private Integer numberOfGuest;
+    private final Integer maxPrice;
+
+    private final Integer numberOfGuest;
 
 }
