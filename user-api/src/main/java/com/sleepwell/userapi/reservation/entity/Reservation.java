@@ -20,9 +20,11 @@ public class Reservation {
 
     private LocalDate checkOutDate;
 
-    private int numberOfGuest;
+    private LocalDate reservedDate;
 
     private ReservationStatus reservationStatus;
+
+    private int numberOfGuest;
 
     private Member guest;
 
@@ -40,6 +42,11 @@ public class Reservation {
         this.setAccommodation(accommodation);
         guest.getReservations().add(this);
         accommodation.getReservations().add(this);
+    }
+
+    public void cancelReservation() {
+        accommodation.getReservations().remove(this);
+        this.setReservationStatus(ReservationStatus.CANCELED);
     }
 
     public ReservationDetailInfoDto toReservationDetailInfoDto() {
