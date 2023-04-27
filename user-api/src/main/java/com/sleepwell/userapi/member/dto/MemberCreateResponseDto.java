@@ -1,5 +1,6 @@
 package com.sleepwell.userapi.member.dto;
 
+import com.sleepwell.userapi.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,4 +12,10 @@ public class MemberCreateResponseDto {
 
     private final String email;
 
+    public static MemberCreateResponseDto toDto(Member member) {
+        return MemberCreateResponseDto.builder()
+                .name(member.getName())
+                .email(member.getEmail())
+                .build();
+    }
 }

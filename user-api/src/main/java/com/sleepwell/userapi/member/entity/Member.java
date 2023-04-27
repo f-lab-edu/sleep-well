@@ -1,6 +1,7 @@
 package com.sleepwell.userapi.member.entity;
 
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
+import com.sleepwell.userapi.member.dto.MemberCreateResponseDto;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,4 +24,17 @@ public class Member {
     private List<Reservation> reservations = new ArrayList<>();
 
     private List<Accommodation> accommodations = new ArrayList<>();
+
+    public Member(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public MemberCreateResponseDto toMemberCreateResponseDto() {
+        return MemberCreateResponseDto.builder()
+                .name(this.name)
+                .email(this.email)
+                .build();
+    }
 }

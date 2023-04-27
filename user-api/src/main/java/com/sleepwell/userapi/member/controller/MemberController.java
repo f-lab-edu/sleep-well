@@ -2,21 +2,28 @@ package com.sleepwell.userapi.member.controller;
 
 import com.sleepwell.userapi.member.dto.MemberCreateRequestDto;
 import com.sleepwell.userapi.member.dto.MemberCreateResponseDto;
+import com.sleepwell.userapi.member.entity.Member;
+import com.sleepwell.userapi.member.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController("/member")
 public class MemberController {
 
-    //TODO: MemberService 구현
+    private final MemberService memberService;
 
+    /**
+     * TODO:
+     * 그럼 DTO가 여러 엔티티의 정보를 담고있다면 어떻할까?
+     * DTO는 dto.fromEntity처럼 변환하는게 이후 여러 entity를 주입해야할 경우가 생길 수 있어 좋을 것 같다.
+     */
     @PostMapping("/create")
     public MemberCreateResponseDto createMember(@RequestBody MemberCreateRequestDto memberCreateRequestDto) {
-        //entity = MemberService.createMember
-        return MemberCreateResponseDto.builder()
-                .name("회원 이름")
-                .email("email@email.com")
-                .build();
+        Member member = memberCreateRequestDto.toMember();
+        Member createdMember = memberService.createMember(member);
+        return MemberCreateResponseDto.toDto(createdMember);
     }
 }
