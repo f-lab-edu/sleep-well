@@ -10,7 +10,7 @@ public class MemberRepository {
         return new Member("이름", "eamil@email.com", "password");
     }
 
-    public boolean existsByEmail() {
+    public boolean existsByEmail(String email) {
         return false;
     }
 
