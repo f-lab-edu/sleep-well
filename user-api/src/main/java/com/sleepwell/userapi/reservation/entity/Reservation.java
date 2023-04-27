@@ -22,7 +22,7 @@ public class Reservation {
 
     private int numberOfGuest;
 
-    private String reservationStatus;
+    private ReservationStatus reservationStatus;
 
     private Member guest;
 

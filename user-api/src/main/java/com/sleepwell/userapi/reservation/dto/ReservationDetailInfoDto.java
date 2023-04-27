@@ -1,5 +1,6 @@
 package com.sleepwell.userapi.reservation.dto;
 
+import com.sleepwell.userapi.reservation.entity.ReservationStatus;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -43,5 +44,5 @@ public class ReservationDetailInfoDto {
 
     private final int guests;
 
-    private final String reservationStatus;
+    private final ReservationStatus reservationStatus;
 }
