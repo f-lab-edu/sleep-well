@@ -54,7 +54,7 @@ public class ReservationService {
      * 특정 기간동안 지불이 완료되지 않은 숙소는 제거
      * 예약 정보는 보존하고, 예약 상태, 숙소 연관관계 삭제
      */
-    @Scheduled(cron = "0 * * * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
     public void cancelNotPayedReservations() {
         log.info("{} - 미지불 고객 예약 취소 시작", LocalDateTime.now());
         List<Reservation> reservations = reservationRepository.findByReservationStatusAndReservedDateLessThanEqual(ReservationStatus.BEFORE_PAYED, LocalDate.now().minusDays(PAYMENT_GRACE_PERIOD));
