@@ -2,7 +2,6 @@ package com.sleepwell.userapi.reservation.entity;
 
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import com.sleepwell.userapi.member.entity.Member;
-import com.sleepwell.userapi.reservation.dto.ReservationDetailInfoDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,25 +39,5 @@ public class Reservation {
         this.setAccommodation(accommodation);
         guest.getReservations().add(this);
         accommodation.getReservations().add(this);
-    }
-
-    public ReservationDetailInfoDto toReservationDetailInfoDto() {
-        return ReservationDetailInfoDto.builder()
-                .reservationId(this.id)
-                .accommodationId(this.accommodation.getId())
-                .accommodationName(this.accommodation.getAccommodationName())
-                .hostName(this.accommodation.getHost().getName())
-                .guestName(this.guest.getName())
-                .price(this.accommodation.getPrice())
-                .paymentType(this.paymentType)
-                .accommodationType(this.accommodation.getAccommodationType())
-                .location(this.accommodation.getLocation())
-                .checkInDate(this.checkInDate)
-                .checkOutDate(this.checkOutDate)
-                .checkInTime(this.accommodation.getCheckInTime())
-                .checkOutTime(this.accommodation.getCheckOutTime())
-                .guests(this.numberOfGuest)
-                .reservationStatus(this.reservationStatus)
-                .build();
     }
 }

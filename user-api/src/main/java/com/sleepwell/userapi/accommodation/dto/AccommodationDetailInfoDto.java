@@ -1,5 +1,6 @@
 package com.sleepwell.userapi.accommodation.dto;
 
+import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -36,5 +37,21 @@ public class AccommodationDetailInfoDto {
     private final Integer maximumNumberOfGuest;
 
     private final String description;
+
+    public static AccommodationDetailInfoDto toDto(Accommodation accommodation) {
+        return AccommodationDetailInfoDto.builder()
+                .accommodationId(accommodation.getId())
+                .accommodationName(accommodation.getAccommodationName())
+                .price(accommodation.getPrice())
+                .accommodationType(accommodation.getAccommodationType())
+                .location(accommodation.getLocation())
+                .checkInDate(accommodation.getCheckInDate())
+                .checkOutDate(accommodation.getCheckOutDate())
+                .checkInTime(accommodation.getCheckInTime())
+                .checkOutTime(accommodation.getCheckOutTime())
+                .maximumNumberOfGuest(accommodation.getMaximumNumberOfGuest())
+                .description(accommodation.getDescription())
+                .build();
+    }
 
 }

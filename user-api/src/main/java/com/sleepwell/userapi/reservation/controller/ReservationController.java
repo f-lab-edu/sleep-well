@@ -26,7 +26,7 @@ public class ReservationController {
     public ReservationDetailInfoDto createReservation(@RequestBody ReservationRequestDto reservationRequestDto) {
         Reservation reservation = reservationRequestDto.toEntity();
         Reservation createdReservation = reservationService.createReservation(reservation, reservationRequestDto.getAccommodationId(), reservationRequestDto.getGuestId());
-        return createdReservation.toReservationDetailInfoDto();
+        return ReservationDetailInfoDto.toDto(createdReservation);
     }
 
     /**
@@ -35,6 +35,6 @@ public class ReservationController {
     @GetMapping("/{reservationId}")
     public ReservationDetailInfoDto getReservation(@PathVariable(name = "reservationId") Long reservationId) {
         Reservation reservation = reservationService.getReservation(reservationId);
-        return reservation.toReservationDetailInfoDto();
+        return ReservationDetailInfoDto.toDto(reservation);
     }
 }
