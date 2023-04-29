@@ -2,6 +2,9 @@ package com.sleepwell.userapi.payment.entity;
 
 public enum PaymentStatus {
 
-    BEFORE_PAID, PAID, CANCELED
+    READY, PAID, FAILED, CANCELED;
 
+    public boolean isMatch(String paymentStatus) {
+        return this.name().equals(paymentStatus);
+    }
 }
