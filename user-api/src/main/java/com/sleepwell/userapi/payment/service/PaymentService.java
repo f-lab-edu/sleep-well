@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +31,9 @@ public class PaymentService {
         }
 
         //TODO: 결제 금액 불일치 예외 추가예정
+        if (!Objects.equals(paymentResponse.getAmount(), reservation.getAmount())) {
+            throw new RuntimeException("결제 금액이 불일치합니다.");
+        }
 
         PaymentResult paymentResult = new PaymentResult(paymentResponse);
         reservation.updatePayment(paymentResult);
