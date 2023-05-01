@@ -8,7 +8,6 @@ import com.sleepwell.userapi.payment.entity.PaymentResult;
 import com.sleepwell.userapi.payment.repository.PaymentRepository;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import com.sleepwell.userapi.reservation.service.ReservationService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +20,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -61,7 +62,7 @@ class PaymentServiceTest {
         when(payment.getStatus()).thenReturn("FAILED");
 
         //then
-        Assertions.assertThrows(RuntimeException.class, () -> paymentService.createPaymentResult("1", "1"));
+        assertThrows(RuntimeException.class, () -> paymentService.createPaymentResult("1", "1"));
     }
 
     @DisplayName("결제 금액이 예약 금액과 일치하지 않으면 예외 발생")
@@ -73,7 +74,7 @@ class PaymentServiceTest {
         when(reservation.getAmount()).thenReturn(BigDecimal.ONE);
 
         //then
-        Assertions.assertThrows(RuntimeException.class, () -> paymentService.createPaymentResult("1", "1"));
+        assertThrows(RuntimeException.class, () -> paymentService.createPaymentResult("1", "1"));
     }
 
     @DisplayName("정상 결제 요청 시 결제 정보 반환")
@@ -90,8 +91,6 @@ class PaymentServiceTest {
         when(paymentRepository.save(any())).thenReturn(paymentResult);
 
         //then
-        Assertions.assertEquals(paymentResult, paymentService.createPaymentResult("1", "1"));
+        assertEquals(paymentResult, paymentService.createPaymentResult("1", "1"));
     }
-
-
 }
