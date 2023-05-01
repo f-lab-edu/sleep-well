@@ -46,7 +46,7 @@ public class ReservationDetailInfoDto {
 
     private final String reservationStatus;
 
-    public static ReservationDetailInfoDto toDto(Reservation reservation) {
+    public static ReservationDetailInfoDto fromEntity(Reservation reservation) {
         return ReservationDetailInfoDto.builder()
                 .reservationId(reservation.getId())
                 .accommodationId(reservation.getAccommodation().getId())

@@ -28,7 +28,7 @@ public class AccommodationController {
     @GetMapping
     public List<AccommodationInfoDto> findAccommodation(@RequestBody AccommodationSearchDto accommodationSearchDto) {
         return accommodationService.findAccommodation(accommodationSearchDto).stream()
-                .map(AccommodationInfoDto::toDto)
+                .map(AccommodationInfoDto::fromEntity)
                 .collect(Collectors.toList());
     }
 
@@ -38,6 +38,6 @@ public class AccommodationController {
     @GetMapping("/{accommodationId}")
     public AccommodationDetailInfoDto getAccommodation(@PathVariable(name = "accommodationId") Long accommodationId) {
          Accommodation accommodation = accommodationService.getAccommodation(accommodationId);
-        return AccommodationDetailInfoDto.toDto(accommodation);
+        return AccommodationDetailInfoDto.fromEntity(accommodation);
     }
 }

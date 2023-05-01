@@ -19,7 +19,7 @@ public class AccommodationInfoDto {
     private final int maximumNumberOfGuest;
 
 
-    public static AccommodationInfoDto toDto(Accommodation accommodation) {
+    public static AccommodationInfoDto fromEntity(Accommodation accommodation) {
         return AccommodationInfoDto.builder()
                 .accommodationName(accommodation.getAccommodationName())
                 .accommodationType(accommodation.getAccommodationType())

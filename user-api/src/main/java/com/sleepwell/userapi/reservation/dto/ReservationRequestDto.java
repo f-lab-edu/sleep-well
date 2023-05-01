@@ -31,7 +31,7 @@ public class ReservationRequestDto {
 
     private final int numberOfGuest;
 
-    public Reservation toReservation() {
+    public Reservation toEntity() {
         return new Reservation(this.paymentType, checkInDate, checkOutDate, numberOfGuest);
     }
 }

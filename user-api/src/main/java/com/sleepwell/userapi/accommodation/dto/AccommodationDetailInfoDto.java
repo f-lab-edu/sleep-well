@@ -38,7 +38,7 @@ public class AccommodationDetailInfoDto {
 
     private final String description;
 
-    public static AccommodationDetailInfoDto toDto(Accommodation accommodation) {
+    public static AccommodationDetailInfoDto fromEntity(Accommodation accommodation) {
         return AccommodationDetailInfoDto.builder()
                 .accommodationId(accommodation.getId())
                 .accommodationName(accommodation.getAccommodationName())

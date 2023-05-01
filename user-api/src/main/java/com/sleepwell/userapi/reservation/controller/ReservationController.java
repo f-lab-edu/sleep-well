@@ -24,9 +24,9 @@ public class ReservationController {
      */
     @PostMapping
     public ReservationDetailInfoDto createReservation(@RequestBody ReservationRequestDto reservationRequestDto) {
-        Reservation reservation = reservationRequestDto.toReservation();
+        Reservation reservation = reservationRequestDto.toEntity();
         Reservation createdReservation = reservationService.createReservation(reservation, reservationRequestDto.getAccommodationId(), reservationRequestDto.getGuestId());
-        return ReservationDetailInfoDto.toDto(createdReservation);
+        return ReservationDetailInfoDto.fromEntity(createdReservation);
     }
 
     /**
@@ -35,6 +35,6 @@ public class ReservationController {
     @GetMapping("/{reservationId}")
     public ReservationDetailInfoDto getReservation(@PathVariable(name = "reservationId") Long reservationId) {
         Reservation reservation = reservationService.getReservation(reservationId);
-        return ReservationDetailInfoDto.toDto(reservation);
+        return ReservationDetailInfoDto.fromEntity(reservation);
     }
 }
