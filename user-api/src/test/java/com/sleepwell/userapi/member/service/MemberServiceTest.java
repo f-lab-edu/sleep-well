@@ -2,12 +2,14 @@ package com.sleepwell.userapi.member.service;
 
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.member.repository.MemberRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,8 +19,9 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
 
+
     @Mock
-    Member member;
+    PasswordEncoder passwordEncoder;
 
     @Mock
     private MemberRepository memberRepository;
@@ -26,11 +29,17 @@ class MemberServiceTest {
     @InjectMocks
     private MemberService memberService;
 
+    Member member;
+
+    @BeforeEach
+    void setup() {
+        member = new Member("이름", "email@email", "password");
+    }
+
     @DisplayName("중복 이메일 입력 시 예외 발생")
     @Test
     void createMemberWithDuplicateEmail() {
         //given
-        when(member.getEmail()).thenReturn("email@email.com");
         when(memberRepository.existsByEmail(any())).thenReturn(true);
 
         //then
@@ -41,8 +50,8 @@ class MemberServiceTest {
     @Test
     void createMemberWithValidMemberInfo() {
         //given
-        when(member.getEmail()).thenReturn("eamil@email.com");
         when(memberRepository.existsByEmail(any())).thenReturn(false);
+        when(passwordEncoder.encode(any())).thenReturn("1234");
         when(memberRepository.save(any())).thenReturn(member);
 
         //then
