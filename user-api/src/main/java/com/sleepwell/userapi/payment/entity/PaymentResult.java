@@ -1,6 +1,5 @@
 package com.sleepwell.userapi.payment.entity;
 
-import com.siot.IamportRestClient.response.Payment;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,10 +21,10 @@ public class PaymentResult {
 
     private Reservation reservation;
 
-    public PaymentResult(Payment payment) {
-        this.impUid = Long.valueOf(payment.getImpUid());
-        this.amount = payment.getAmount();
-        this.paymentStatus = PaymentStatus.valueOf(payment.getStatus());
-        this.paidAt = payment.getPaidAt();
+    public PaymentResult(Long impUid, BigDecimal amount, PaymentStatus paymentStatus, Date paidAt) {
+        this.impUid = impUid;
+        this.amount = amount;
+        this.paymentStatus = paymentStatus;
+        this.paidAt = paidAt;
     }
 }

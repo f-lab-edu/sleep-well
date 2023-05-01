@@ -26,16 +26,15 @@ public class PaymentService {
         Reservation reservation = reservationService.getReservation(Long.valueOf(merchantUid));
         Payment paymentResponse = getPaymentResponse(impUid);
 
-        if (PaymentStatus.PAID.isMatch(paymentResponse.getStatus())) {
+        if (!PaymentStatus.PAID.isMatch(paymentResponse.getStatus())) {
             throw new RuntimeException("결제가 완료되지 않았습니다.");
         }
 
-        //TODO: 결제 금액 불일치 예외 추가예정
         if (!Objects.equals(paymentResponse.getAmount(), reservation.getAmount())) {
             throw new RuntimeException("결제 금액이 불일치합니다.");
         }
 
-        PaymentResult paymentResult = new PaymentResult(paymentResponse);
+        PaymentResult paymentResult = new PaymentResult(Long.valueOf(paymentResponse.getImpUid()), paymentResponse.getAmount(), PaymentStatus.valueOf(paymentResponse.getStatus()), paymentResponse.getPaidAt());
         reservation.updatePayment(paymentResult);
         return paymentRepository.save(paymentResult);
     }
