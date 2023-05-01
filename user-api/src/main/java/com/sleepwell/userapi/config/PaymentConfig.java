@@ -1,15 +1,18 @@
 package com.sleepwell.userapi.config;
 
 import com.siot.IamportRestClient.IamportClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class PaymentConfig {
 
-    private final String apiKey = "4175370216044566";
+    @Value("${iamport.rest.api.key}")
+    private String apiKey;
 
-    private final String apiSecret = "aLovTz0AuOhId4L0MXNBEV4rMYa7n044fRJRmFkSzk5uUrpS9qIzdTHw2Hbe2FU3a9CA5VAOOvaEuDFJ";
+    @Value("${iamport.rest.api.secret}")
+    private String apiSecret;
 
     @Bean
     public IamportClient iamportClient() {
