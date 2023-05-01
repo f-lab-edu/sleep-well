@@ -17,11 +17,6 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    /**
-     * TODO:
-     * 그럼 DTO가 여러 엔티티의 정보를 담고있다면 어떻할까?
-     * DTO는 dto.fromEntity처럼 변환하는게 이후 여러 entity를 주입해야할 경우가 생길 수 있어 좋을 것 같다.
-     */
     @PostMapping("/create")
     public MemberCreateResponseDto createMember(@RequestBody MemberCreateRequestDto memberCreateRequestDto) {
         Member member = memberCreateRequestDto.toMember();
