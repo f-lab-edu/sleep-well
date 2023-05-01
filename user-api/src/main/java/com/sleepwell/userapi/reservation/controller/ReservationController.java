@@ -24,7 +24,7 @@ public class ReservationController {
      */
     @PostMapping
     public ReservationDetailInfoDto createReservation(@RequestBody ReservationRequestDto reservationRequestDto) {
-        Reservation reservation = reservationRequestDto.toEntity();
+        Reservation reservation = reservationRequestDto.toReservation();
         Reservation createdReservation = reservationService.createReservation(reservation, reservationRequestDto.getAccommodationId(), reservationRequestDto.getGuestId());
         return ReservationDetailInfoDto.toDto(createdReservation);
     }
