@@ -42,14 +42,14 @@ class PaymentServiceTest {
     @InjectMocks
     private PaymentService paymentService;
 
+    @Mock
     private Payment payment;
 
+    @Mock
     private Reservation reservation;
 
     @BeforeEach
     void setup() throws IamportResponseException, IOException {
-        payment = mock(Payment.class);
-        reservation = mock(Reservation.class);
         when(reservationService.getReservation(any())).thenReturn(reservation);
         when(iamportClient.paymentByImpUid(any())).thenReturn(mock(IamportResponse.class));
         when(iamportClient.paymentByImpUid(any()).getResponse()).thenReturn(payment);
