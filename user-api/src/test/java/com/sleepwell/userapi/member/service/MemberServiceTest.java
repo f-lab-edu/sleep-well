@@ -2,7 +2,6 @@ package com.sleepwell.userapi.member.service;
 
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.member.repository.MemberRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,12 +28,8 @@ class MemberServiceTest {
     @InjectMocks
     private MemberService memberService;
 
+    @Mock
     Member member;
-
-    @BeforeEach
-    void setup() {
-        member = new Member("이름", "email@email", "password");
-    }
 
     @DisplayName("중복 이메일 입력 시 예외 발생")
     @Test
