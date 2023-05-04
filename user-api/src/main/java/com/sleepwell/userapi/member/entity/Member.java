@@ -23,4 +23,10 @@ public class Member {
     private List<Reservation> reservations = new ArrayList<>();
 
     private List<Accommodation> accommodations = new ArrayList<>();
+
+    public Member(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 }
