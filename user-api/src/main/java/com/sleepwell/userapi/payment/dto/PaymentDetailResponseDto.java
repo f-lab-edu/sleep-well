@@ -22,7 +22,7 @@ public class PaymentDetailResponseDto {
 
     private final String accommodationName;
 
-    public static PaymentDetailResponseDto toDto(PaymentResult paymentResult) {
+    public static PaymentDetailResponseDto fromEntity(PaymentResult paymentResult) {
         return PaymentDetailResponseDto.builder()
                 .impUid(paymentResult.getImpUid())
                 .reservationId(paymentResult.getReservation().getId())

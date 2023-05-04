@@ -20,6 +20,6 @@ public class PaymentController {
     @PostMapping
     public PaymentDetailResponseDto createPaymentResult(@RequestBody PaymentRequestDto paymentRequestDto) {
         PaymentResult paymentResult = paymentService.createPaymentResult(paymentRequestDto.getImpUid(), paymentRequestDto.getMerchantUid());
-        return PaymentDetailResponseDto.toDto(paymentResult);
+        return PaymentDetailResponseDto.fromEntity(paymentResult);
     }
 }
