@@ -71,7 +71,7 @@ class PaymentServiceTest {
         //given
         when(payment.getStatus()).thenReturn("PAID");
         when(payment.getAmount()).thenReturn(BigDecimal.TEN);
-        when(reservation.getAmount()).thenReturn(BigDecimal.ONE);
+        when(reservation.getAmount()).thenReturn(1);
 
         //then
         assertThrows(RuntimeException.class, () -> paymentService.createPaymentResult("1", "1"));
@@ -84,7 +84,7 @@ class PaymentServiceTest {
         PaymentResult paymentResult = mock(PaymentResult.class);
         when(payment.getStatus()).thenReturn("PAID");
         when(payment.getAmount()).thenReturn(BigDecimal.TEN);
-        when(reservation.getAmount()).thenReturn(BigDecimal.TEN);
+        when(reservation.getAmount()).thenReturn(10);
         when(payment.getImpUid()).thenReturn("1");
         when(payment.getPaidAt()).thenReturn(mock(Date.class));
         doNothing().when(reservation).updatePayment(any());

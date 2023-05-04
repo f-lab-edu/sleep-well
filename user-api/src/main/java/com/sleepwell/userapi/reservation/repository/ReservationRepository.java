@@ -28,7 +28,7 @@ public class ReservationRepository {
 
     public List<Reservation> findByReservationStatusAndReservedDateLessThanEqual(ReservationStatus reservationStatus, LocalDate localDate) {
         Reservation reservation = new Reservation("지불 타입", LocalDate.of(2023, 4, 24), LocalDate.of(2023, 4, 24), 10);
-        reservation.updateReservation(new Member(),
+        reservation.updateReservation(new Member("이름", "email@email.com", "password"),
                 new Accommodation("숙소 이름", 1_000_000, "숙소 타입", "지역", LocalDate.of(2023, 4, 24), LocalDate.of(2023, 4, 25), LocalTime.of(15, 0), LocalTime.of(11, 0), 10, "상세 정보"));
         return List.of(reservation);
     }
