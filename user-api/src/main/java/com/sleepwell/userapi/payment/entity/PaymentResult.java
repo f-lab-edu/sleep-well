@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
@@ -15,7 +14,7 @@ public class PaymentResult {
 
     private Long impUid;
 
-    private BigDecimal amount;
+    private int amount;
 
     private PaymentStatus paymentStatus;
 

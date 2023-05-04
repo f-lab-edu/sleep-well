@@ -34,7 +34,7 @@ public class PaymentService {
             throw new RuntimeException("결제 금액이 불일치합니다.");
         }
 
-        PaymentResult paymentResult = new PaymentResult(Long.valueOf(paymentResponse.getImpUid()), paymentResponse.getAmount(), PaymentStatus.valueOf(paymentResponse.getStatus()), paymentResponse.getPaidAt());
+        PaymentResult paymentResult = new PaymentResult(Long.valueOf(paymentResponse.getImpUid()), paymentResponse.getAmount().intValue(), PaymentStatus.valueOf(paymentResponse.getStatus()), paymentResponse.getPaidAt(), reservation);
         reservation.updatePayment(paymentResult);
         return paymentRepository.save(paymentResult);
     }

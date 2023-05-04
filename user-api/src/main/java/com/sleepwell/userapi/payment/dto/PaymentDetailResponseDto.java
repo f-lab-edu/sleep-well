@@ -4,7 +4,6 @@ import com.sleepwell.userapi.payment.entity.PaymentResult;
 import com.sleepwell.userapi.payment.entity.PaymentStatus;
 import lombok.Builder;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Builder
@@ -14,7 +13,7 @@ public class PaymentDetailResponseDto {
 
     private final Long reservationId;
 
-    private final BigDecimal amount;
+    private final int amount;
 
     private final PaymentStatus paymentStatus;
 

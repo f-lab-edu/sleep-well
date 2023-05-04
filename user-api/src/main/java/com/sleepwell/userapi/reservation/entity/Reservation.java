@@ -7,7 +7,6 @@ import com.sleepwell.userapi.reservation.dto.ReservationDetailInfoDto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -28,7 +27,7 @@ public class Reservation {
 
     private int numberOfGuest;
 
-    private BigDecimal amount;
+    private int amount;
 
     private Member guest;
 
@@ -53,7 +52,6 @@ public class Reservation {
     public void updatePayment(PaymentResult paymentResult) {
         this.paymentResult = paymentResult;
         this.reservationStatus = ReservationStatus.RESERVED;
-        this.paymentResult.setReservation(this);
     }
 
     public void cancelReservation() {
