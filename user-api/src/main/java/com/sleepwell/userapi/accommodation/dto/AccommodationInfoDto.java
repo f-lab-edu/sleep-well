@@ -1,5 +1,6 @@
 package com.sleepwell.userapi.accommodation.dto;
 
+import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,4 +18,14 @@ public class AccommodationInfoDto {
 
     private final int maximumNumberOfGuest;
 
+
+    public static AccommodationInfoDto fromEntity(Accommodation accommodation) {
+        return AccommodationInfoDto.builder()
+                .accommodationName(accommodation.getAccommodationName())
+                .accommodationType(accommodation.getAccommodationType())
+                .price(accommodation.getPrice())
+                .location(accommodation.getLocation())
+                .maximumNumberOfGuest(accommodation.getMaximumNumberOfGuest())
+                .build();
+    }
 }

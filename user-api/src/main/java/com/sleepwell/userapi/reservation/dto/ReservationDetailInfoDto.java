@@ -1,5 +1,6 @@
 package com.sleepwell.userapi.reservation.dto;
 
+import com.sleepwell.userapi.reservation.entity.Reservation;
 import com.sleepwell.userapi.reservation.entity.ReservationStatus;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,7 +43,27 @@ public class ReservationDetailInfoDto {
     @DateTimeFormat(pattern = "hh:mm")
     private final LocalTime checkOutTime;
 
-    private final int guests;
+    private final int numberOfGuest;
 
     private final ReservationStatus reservationStatus;
+
+    public static ReservationDetailInfoDto fromEntity(Reservation reservation) {
+        return ReservationDetailInfoDto.builder()
+                .reservationId(reservation.getId())
+                .accommodationId(reservation.getAccommodation().getId())
+                .accommodationName(reservation.getAccommodation().getAccommodationName())
+                .hostName(reservation.getAccommodation().getHost().getName())
+                .guestName(reservation.getGuest().getName())
+                .price(reservation.getAccommodation().getPrice())
+                .paymentType(reservation.getPaymentType())
+                .accommodationType(reservation.getAccommodation().getAccommodationType())
+                .location(reservation.getAccommodation().getLocation())
+                .checkInDate(reservation.getCheckInDate())
+                .checkOutDate(reservation.getCheckOutDate())
+                .checkInTime(reservation.getAccommodation().getCheckInTime())
+                .checkOutTime(reservation.getAccommodation().getCheckOutTime())
+                .numberOfGuest(reservation.getNumberOfGuest())
+                .reservationStatus(reservation.getReservationStatus())
+                .build();
+    }
 }
