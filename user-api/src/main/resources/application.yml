@@ -1,5 +1,3 @@
 iamport:
-  rest:
-    api:
-      key: ENC(qEHe1ovSqSwo37g2Td7oJ1S9JgFrvdAFwUB1tyYvPhI=)
-      secret: ENC(5ynAhUPFenEmzIyAifZFZ9mZE5opzWHSlTzZL95pHmP/XLpasFkGjy06MDZh8HCa5el5LYSGZI/eam81PiMlpdrKIKKDSiWE8U9cdE/tDlaNp8ts2ER/NIsu9z/K52MK)
+  api-key: ENC(qEHe1ovSqSwo37g2Td7oJ1S9JgFrvdAFwUB1tyYvPhI=)
+  api-secret: ENC(5ynAhUPFenEmzIyAifZFZ9mZE5opzWHSlTzZL95pHmP/XLpasFkGjy06MDZh8HCa5el5LYSGZI/eam81PiMlpdrKIKKDSiWE8U9cdE/tDlaNp8ts2ER/NIsu9z/K52MK)
