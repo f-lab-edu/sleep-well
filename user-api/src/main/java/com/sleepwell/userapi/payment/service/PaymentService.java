@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +29,7 @@ public class PaymentService {
             throw new RuntimeException("결제가 완료되지 않았습니다.");
         }
 
-        if (!Objects.equals(paymentResponse.getAmount(), reservation.getAmount())) {
+        if (paymentResponse.getAmount().intValue() != reservation.getAmount()) {
             throw new RuntimeException("결제 금액이 불일치합니다.");
         }
 
