@@ -7,7 +7,15 @@ import org.springframework.stereotype.Repository;
 public class MemberRepository {
 
     public Member findById(Long guestId) {
-        return new Member();
+        return new Member("이름", "eamil@email.com", "password");
     }
 
+    public boolean existsByEmail(String email) {
+        return false;
+    }
+
+    public Member save(Member member) {
+        member.setId(1L);
+        return member;
+    }
 }
