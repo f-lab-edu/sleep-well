@@ -6,3 +6,6 @@ jwt:
   provider:
     secret-key: Zi1sYWItdGlja2V0aW5nLXByb2plY3Qtc3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXNlY3JldC1rZXktZi1sYWItdGlja2V0aW5nLXByb2plY3Qtc3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXNlY3JldC1rZXkK
     token-validate-time: 6000
+  filter:
+    header: ACCESS_TOKEN
+    prefix: Bearer
