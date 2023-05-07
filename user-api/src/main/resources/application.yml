@@ -4,7 +4,6 @@ iamport:
 
 jwt:
   provider:
-    secret-key: ENC(g5nX/AlnBgmdRqjIXMdXXQ==)
     token-validate-time: 600000
   filter:
     header: ACCESS_TOKEN
