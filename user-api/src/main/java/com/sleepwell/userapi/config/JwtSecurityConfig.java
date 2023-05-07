@@ -12,7 +12,7 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
 
     private final JwtFilter jwtFilter;
 
-    // JwtFilter 를 Security Filter 앞에 등록
+    // JwtFilter 를 UsernamePasswordAuthenticationFilter 앞에 등록
     @Override
     public void configure(HttpSecurity http) {
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

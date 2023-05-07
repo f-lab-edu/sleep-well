@@ -33,7 +33,8 @@ public class JwtProvider {
     private long tokenValidateTime;
 
     public JwtProvider() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+//        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        byte[] keyBytes = Decoders.BASE64.decode("Zi1sYWItdGlja2V0aW5nLXByb2plY3Qtc3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXNlY3JldC1rZXktZi1sYWItdGlja2V0aW5nLXByb2plY3Qtc3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXNlY3JldC1rZXkK");
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
