@@ -21,7 +21,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        JwtSecurityConfig apply = http
+        http
                 //csrf-off, 인증 예외처리
                 .csrf().disable()
                 .exceptionHandling()
@@ -37,8 +37,8 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/member/create", "/member/login", "/reservation").permitAll()
-                .antMatchers(HttpMethod.GET, "/reservation/**", "/rooms", "/rooms/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/member/create", "/member/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/rooms", "/rooms/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtSecurityConfig(jwtFilter));
