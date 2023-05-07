@@ -13,6 +13,10 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
+    public String login(String email, String password) {
+        return "jwtToken";
+    }
+
     public Member createMember(Member member) {
         if (memberRepository.existsByEmail(member.getEmail())) {
             throw new RuntimeException("중복된 이메일입니다. 다시 입력해주세요.");

@@ -2,6 +2,7 @@ package com.sleepwell.userapi.member.controller;
 
 import com.sleepwell.userapi.member.dto.MemberCreateRequestDto;
 import com.sleepwell.userapi.member.dto.MemberCreateResponseDto;
+import com.sleepwell.userapi.member.dto.MemberLoginRequestDto;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     private final MemberService memberService;
+
+    @PostMapping("/login")
+    public String login(@RequestBody MemberLoginRequestDto memberLoginRequestDto) {
+        return memberService.login(memberLoginRequestDto.getEmail(), memberLoginRequestDto.getPassword());
+    }
 
     @PostMapping("/create")
     public MemberCreateResponseDto createMember(@RequestBody MemberCreateRequestDto memberCreateRequestDto) {
