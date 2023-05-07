@@ -6,7 +6,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
 import lombok.Setter;
@@ -29,13 +28,10 @@ import java.util.Date;
 public class JwtProvider {
 
     private final Key key;
-    private String secretKey;
     private long tokenValidateTime;
 
     public JwtProvider() {
-//        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        byte[] keyBytes = Decoders.BASE64.decode("Zi1sYWItdGlja2V0aW5nLXByb2plY3Qtc3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXNlY3JldC1rZXktZi1sYWItdGlja2V0aW5nLXByb2plY3Qtc3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXNlY3JldC1rZXkK");
-        this.key = Keys.hmacShaKeyFor(keyBytes);
+        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     }
 
     //토큰 생성
