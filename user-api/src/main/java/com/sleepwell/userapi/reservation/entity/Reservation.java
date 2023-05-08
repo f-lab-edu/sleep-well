@@ -34,11 +34,12 @@ public class Reservation {
 
     private PaymentResult paymentResult;
 
-    public Reservation(String paymentType, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuest) {
+    public Reservation(String paymentType, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuest, int amount) {
         this.paymentType = paymentType;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
         this.numberOfGuest = numberOfGuest;
+        this.amount = amount;
     }
 
     public void updateReservation(Member guest, Accommodation accommodation) {
