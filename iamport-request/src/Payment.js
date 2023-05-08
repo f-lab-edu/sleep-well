@@ -11,7 +11,7 @@ function Payment() {
         const data = {
             pg: 'html5_inicis',                           // PG사
             pay_method: 'card',                           // 결제수단
-            merchant_uid: `491234`,  // 주문번호
+            merchant_uid: `491211134`,  // 주문번호
             amount: 100,                                 // 결제금액
             name: '아임포트 결제 테스트',                   // 주문명
             buyer_name: '홍길동',                           // 구매자 이름
