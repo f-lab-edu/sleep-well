@@ -21,6 +21,8 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final ReservationService reservationService;
 
+    private static final String IMP = "imp_";
+
     public PaymentResult createPaymentResult(String impUid, String merchantUid) {
         Reservation reservation = reservationService.getReservation(Long.valueOf(merchantUid));
         Payment paymentResponse = getPaymentResponse(impUid);
@@ -33,7 +35,7 @@ public class PaymentService {
             throw new RuntimeException("결제 금액이 불일치합니다.");
         }
 
-        PaymentResult paymentResult = new PaymentResult(Long.valueOf(paymentResponse.getImpUid().substring(4)), paymentResponse.getAmount().intValue(), PaymentStatus.valueOf(paymentResponse.getStatus().toUpperCase()), paymentResponse.getPaidAt(), reservation);
+        PaymentResult paymentResult = new PaymentResult(Long.valueOf(paymentResponse.getImpUid().replace(IMP, "")), paymentResponse.getAmount().intValue(), PaymentStatus.valueOf(paymentResponse.getStatus().toUpperCase()), paymentResponse.getPaidAt(), reservation);
         reservation.updatePayment(paymentResult);
         return paymentRepository.save(paymentResult);
     }
