@@ -21,6 +21,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private String header;
     private String prefix;
+    private String bearerTokenRegex;
     private final JwtProvider jwtProvider;
 
     public JwtFilter(JwtProvider jwtProvider) {
@@ -41,11 +42,16 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(header);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(prefix)) {
-            return bearerToken.replaceAll(prefix, "").strip();
-        }
 
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(prefix)) {
+            return bearerToken.replaceAll(bearerTokenRegex, "");
+        }
         return null;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+        this.bearerTokenRegex = String.format("^%s\\s+", prefix);
     }
 
 }
