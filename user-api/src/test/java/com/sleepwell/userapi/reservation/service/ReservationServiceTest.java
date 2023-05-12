@@ -51,7 +51,7 @@ class ReservationServiceTest {
 
         accommodation = new Accommodation("숙소 이름", 1_000_000, "숙소 타입", "지역", LocalDate.of(2023, 4, 24), LocalDate.of(2023, 4, 25), LocalTime.of(15, 0), LocalTime.of(11, 0), 10, "상세 정보");
 
-        reservation = new Reservation("지불 타입", LocalDate.of(2023, 4, 24), LocalDate.of(2023, 4, 24), 10);
+        reservation = new Reservation("지불 타입", LocalDate.of(2023, 4, 24), LocalDate.of(2023, 4, 24), 10, 100);
     }
 
     @DisplayName("예약 일자 사이에 이미 예약이 있다면 예약 불가")

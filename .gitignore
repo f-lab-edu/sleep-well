@@ -4,3 +4,6 @@
 ### Gradle Build ###
 .gradle
 **/build
+
+### Frontend ###
+/iamport-request/node_modules

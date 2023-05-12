@@ -19,6 +19,8 @@ public class ReservationRequestDto {
 
     private final String paymentType;
 
+    private final int amount;
+
     private final String accommodationType;
 
     private final String location;
@@ -32,6 +34,6 @@ public class ReservationRequestDto {
     private final int numberOfGuest;
 
     public Reservation toEntity() {
-        return new Reservation(this.paymentType, checkInDate, checkOutDate, numberOfGuest);
+        return new Reservation(this.paymentType, checkInDate, checkOutDate, numberOfGuest, amount);
     }
 }

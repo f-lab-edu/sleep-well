@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PaymentRequestDto {
 
-    private final String impUid;
+    private final String imp_uid;
 
-    private final String merchantUid;
+    private final String merchant_uid;
 
 }

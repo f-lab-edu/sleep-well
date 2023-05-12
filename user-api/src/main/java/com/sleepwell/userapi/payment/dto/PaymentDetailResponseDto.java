@@ -3,9 +3,11 @@ package com.sleepwell.userapi.payment.dto;
 import com.sleepwell.userapi.payment.entity.PaymentResult;
 import com.sleepwell.userapi.payment.entity.PaymentStatus;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.util.Date;
 
+@Getter
 @Builder
 public class PaymentDetailResponseDto {
 
@@ -19,8 +21,6 @@ public class PaymentDetailResponseDto {
 
     private final Date paidAt;
 
-    private final String accommodationName;
-
     public static PaymentDetailResponseDto fromEntity(PaymentResult paymentResult) {
         return PaymentDetailResponseDto.builder()
                 .impUid(paymentResult.getImpUid())
@@ -28,7 +28,6 @@ public class PaymentDetailResponseDto {
                 .amount(paymentResult.getAmount())
                 .paymentStatus(paymentResult.getPaymentStatus())
                 .paidAt(paymentResult.getPaidAt())
-                .accommodationName(paymentResult.getReservation().getAccommodation().getAccommodationName())
                 .build();
     }
 }
