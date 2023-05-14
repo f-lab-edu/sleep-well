@@ -24,7 +24,7 @@ public enum ErrorStatus {
     PAYMENT_NOT_FOUND(400, "유효하지 않은 결제 ID 입니다."),
     PAYMENT_AMOUNT_MISMATCH(400, "결제 금액이 일치하지 않습니다."),
 
-    // 서버 에러
+    // 예기치 못한 경우
     UNEXPECTED_EXCEPTION(400, "요청을 처리할 수 없습니다.");
 
     private final int statusCode;
