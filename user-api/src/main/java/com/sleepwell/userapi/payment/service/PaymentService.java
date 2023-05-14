@@ -3,6 +3,8 @@ package com.sleepwell.userapi.payment.service;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.Payment;
+import com.sleepwell.userapi.error.ErrorStatus;
+import com.sleepwell.userapi.error.exception.BaseException;
 import com.sleepwell.userapi.payment.entity.PaymentResult;
 import com.sleepwell.userapi.payment.entity.PaymentStatus;
 import com.sleepwell.userapi.payment.repository.PaymentRepository;
@@ -28,11 +30,11 @@ public class PaymentService {
         Payment paymentResponse = getPaymentResponse(impUid);
 
         if (!PaymentStatus.PAID.isMatch(paymentResponse.getStatus())) {
-            throw new RuntimeException("결제가 완료되지 않았습니다.");
+            throw new BaseException(ErrorStatus.PAYMENT_NOT_COMPLETE);
         }
 
         if (paymentResponse.getAmount().intValue() != reservation.getAmount()) {
-            throw new RuntimeException("결제 금액이 불일치합니다.");
+            throw new BaseException(ErrorStatus.PAYMENT_AMOUNT_MISMATCH);
         }
 
         PaymentResult paymentResult = new PaymentResult(Long.valueOf(paymentResponse.getImpUid().replace(IMP_PREFIX, "")), paymentResponse.getAmount().intValue(), PaymentStatus.valueOf(paymentResponse.getStatus().toUpperCase()), paymentResponse.getPaidAt(), reservation);
@@ -44,7 +46,7 @@ public class PaymentService {
         try {
             return iamportClient.paymentByImpUid(impUid).getResponse();
         } catch (IamportResponseException | IOException e) {
-            throw new RuntimeException("존재하지 않는 결제 정보입니다.");
+            throw new BaseException(ErrorStatus.PAYMENT_NOT_FOUND);
         }
     }
 }
