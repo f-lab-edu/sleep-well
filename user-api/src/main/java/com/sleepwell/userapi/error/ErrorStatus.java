@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum ErrorStatus {
 
     // 회원 관련 에러
-    DUPLICATED_EMAIL_FOUND(401, "중복된 이메일입니다"),
+    DUPLICATED_EMAIL_FOUND(400, "중복된 이메일입니다"),
 
     // 로그인 관련 에러
     AUTHENTICATION_FAIL(401, "로그인에 실패하였습니다. 이메일 혹은 비밀번호를 확인하세요."),
