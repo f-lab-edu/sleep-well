@@ -4,6 +4,7 @@ import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import com.sleepwell.userapi.accommodation.service.AccommodationService;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.member.repository.MemberRepository;
+import com.sleepwell.userapi.member.service.MemberService;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import com.sleepwell.userapi.reservation.entity.ReservationStatus;
 import com.sleepwell.userapi.reservation.repository.ReservationRepository;
@@ -22,7 +23,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ReservationService {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final AccommodationService accommodationService;
     private final ReservationRepository reservationRepository;
 
@@ -30,7 +31,7 @@ public class ReservationService {
 
     public Reservation createReservation(Reservation reservation, Long accommodationId, Long guestId) {
         Accommodation accommodation = accommodationService.getAccommodation(accommodationId);
-        Member guest = memberRepository.findById(guestId);
+        Member guest = memberService.getMember(guestId);
 
         if (reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(accommodationId, reservation.getCheckInDate(), reservation.getCheckOutDate())) {
             throw new RuntimeException("해당 일자는 예약이 불가합니다.");
