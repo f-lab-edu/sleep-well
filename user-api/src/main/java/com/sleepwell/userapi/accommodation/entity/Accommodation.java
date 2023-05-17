@@ -2,9 +2,17 @@ package com.sleepwell.userapi.accommodation.entity;
 
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.reservation.entity.Reservation;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -12,8 +20,12 @@ import java.util.List;
 
 @Getter
 @Setter
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Accommodation {
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String accommodationName;
@@ -34,10 +46,13 @@ public class Accommodation {
 
     private int maximumNumberOfGuest;
 
+    @Lob
     private String description;
 
+    @OneToOne
     private Member host;
 
+    @OneToMany
     private List<Reservation> reservations = new ArrayList<>();
 
     public Accommodation(String accommodationName, int price, String accommodationType, String location, LocalDate checkInDate, LocalDate checkOutDate, LocalTime checkInTime, LocalTime checkOutTime, int maximumNumberOfGuest, String description) {
