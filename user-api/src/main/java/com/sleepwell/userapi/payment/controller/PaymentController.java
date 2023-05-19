@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/payment")
 @RequiredArgsConstructor
@@ -18,7 +20,7 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping
-    public PaymentDetailResponseDto createPaymentResult(@RequestBody PaymentRequestDto paymentRequestDto) {
+    public PaymentDetailResponseDto createPaymentResult(@RequestBody @Valid PaymentRequestDto paymentRequestDto) {
         PaymentResult paymentResult = paymentService.createPaymentResult(paymentRequestDto.getImp_uid(), paymentRequestDto.getMerchant_uid());
         return PaymentDetailResponseDto.fromEntity(paymentResult);
     }
