@@ -25,8 +25,6 @@ public class ReservationDetailInfoDto {
 
     private final int price;
 
-    private final String paymentType;
-
     private final String accommodationType;
 
     private final String location;
@@ -55,7 +53,6 @@ public class ReservationDetailInfoDto {
                 .hostName(reservation.getAccommodation().getHost().getName())
                 .guestName(reservation.getGuest().getName())
                 .price(reservation.getAccommodation().getPrice())
-                .paymentType(reservation.getPaymentType())
                 .accommodationType(reservation.getAccommodation().getAccommodationType())
                 .location(reservation.getAccommodation().getLocation())
                 .checkInDate(reservation.getCheckInDate())
