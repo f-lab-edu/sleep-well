@@ -16,10 +16,10 @@ public class AccommodationSearchDto {
 
     private final String location;
 
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private final LocalDate checkInDate;
 
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private final LocalDate checkOutDate;
 
     private final Integer minPrice;

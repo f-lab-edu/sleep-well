@@ -14,8 +14,6 @@ public class Reservation {
 
     private Long id;
 
-    private String paymentType;
-
     private LocalDate checkInDate;
 
     private LocalDate checkOutDate;
@@ -34,8 +32,7 @@ public class Reservation {
 
     private PaymentResult paymentResult;
 
-    public Reservation(String paymentType, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuest, int amount) {
-        this.paymentType = paymentType;
+    public Reservation(LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuest, int amount) {
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
         this.numberOfGuest = numberOfGuest;
