@@ -2,7 +2,6 @@ package com.sleepwell.userapi.payment.entity;
 
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,13 +16,13 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PaymentResult {
 
-    //TODO: impUid 가 unique 한지 확인
     @Id
     @GeneratedValue
+    private Long id;
+
     private Long impUid;
 
     private int amount;
@@ -36,4 +35,11 @@ public class PaymentResult {
     @OneToOne
     private Reservation reservation;
 
+    public PaymentResult(Long impUid, int amount, PaymentStatus paymentStatus, Date paidAt, Reservation reservation) {
+        this.impUid = impUid;
+        this.amount = amount;
+        this.paymentStatus = paymentStatus;
+        this.paidAt = paidAt;
+        this.reservation = reservation;
+    }
 }
