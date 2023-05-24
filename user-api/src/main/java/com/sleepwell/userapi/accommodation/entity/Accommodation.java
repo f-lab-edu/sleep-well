@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -49,7 +50,7 @@ public class Accommodation {
     @Lob
     private String description;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Member host;
 
     @OneToMany
