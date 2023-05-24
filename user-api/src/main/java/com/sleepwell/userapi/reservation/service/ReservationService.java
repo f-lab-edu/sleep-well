@@ -3,7 +3,6 @@ package com.sleepwell.userapi.reservation.service;
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import com.sleepwell.userapi.accommodation.service.AccommodationService;
 import com.sleepwell.userapi.member.entity.Member;
-import com.sleepwell.userapi.member.repository.MemberRepository;
 import com.sleepwell.userapi.member.service.MemberService;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import com.sleepwell.userapi.reservation.entity.ReservationStatus;
@@ -33,7 +32,7 @@ public class ReservationService {
         Accommodation accommodation = accommodationService.getAccommodation(accommodationId);
         Member guest = memberService.getMember(guestId);
 
-        if (reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(accommodationId, reservation.getCheckInDate(), reservation.getCheckOutDate())) {
+        if (reservationRepository.existsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(accommodationId, reservation.getCheckInDate(), reservation.getCheckOutDate())) {
             throw new RuntimeException("해당 일자는 예약이 불가합니다.");
         }
         if (accommodation.getMaximumNumberOfGuest() < reservation.getNumberOfGuest()) {
