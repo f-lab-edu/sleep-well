@@ -11,9 +11,9 @@ import java.util.Optional;
 @Repository
 public interface AccommodationRepository extends JpaRepository<Accommodation, Long> {
 
-    public Optional<Accommodation> findById(Long accommodationId);
+    Optional<Accommodation> findById(Long accommodationId);
 
     //동적쿼리 사용 예정
-     public List<Accommodation> findAllByAccommodationSearchDto(AccommodationSearchDto accommodationSearchDto);
+    List<Accommodation> findAllByAccommodationSearchDto(AccommodationSearchDto accommodationSearchDto);
 
 }
