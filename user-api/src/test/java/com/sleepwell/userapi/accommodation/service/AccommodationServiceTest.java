@@ -2,6 +2,7 @@ package com.sleepwell.userapi.accommodation.service;
 
 import com.sleepwell.userapi.accommodation.dto.AccommodationSearchDto;
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
+import com.sleepwell.userapi.accommodation.repository.AccommodationCustomRepository;
 import com.sleepwell.userapi.accommodation.repository.AccommodationRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,9 @@ class AccommodationServiceTest {
     @Mock
     AccommodationRepository accommodationRepository;
 
+    @Mock
+    AccommodationCustomRepository accommodationCustomRepository;
+
     @InjectMocks
     AccommodationService accommodationService;
 
@@ -34,7 +38,7 @@ class AccommodationServiceTest {
     void findAccommodationWithInvalidSearchCondition() {
         //given
         AccommodationSearchDto accommodationSearchDto = mock(AccommodationSearchDto.class);
-        when(accommodationRepository.findAllByAccommodationSearchDto(any())).thenReturn(Collections.emptyList());
+        when(accommodationCustomRepository.findAllByAccommodationSearchDto(any())).thenReturn(Collections.emptyList());
 
         //then
         assertThrows(RuntimeException.class, () -> accommodationService.findAccommodation(accommodationSearchDto));
@@ -46,7 +50,7 @@ class AccommodationServiceTest {
         //given
         AccommodationSearchDto accommodationSearchDto = mock(AccommodationSearchDto.class);
         Accommodation accommodation = mock(Accommodation.class);
-        when(accommodationRepository.findAllByAccommodationSearchDto(any())).thenReturn(List.of(accommodation));
+        when(accommodationCustomRepository.findAllByAccommodationSearchDto(any())).thenReturn(List.of(accommodation));
 
         //then
         List<Accommodation> accommodations = accommodationService.findAccommodation(accommodationSearchDto);
