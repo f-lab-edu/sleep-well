@@ -8,11 +8,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import java.time.LocalDate;
 
@@ -22,8 +25,8 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
+    @Column(name = "RESERVATION_ID")
     private Long id;
 
     //TODO: PaymentType을 적용시킬지, 적용시킨다면 어떻게 적용시킬지 고민
@@ -42,13 +45,15 @@ public class Reservation {
 
     private int amount;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID")
     private Member guest;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ACCOMMODATION_ID")
     private Accommodation accommodation;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "reservation")
     private PaymentResult paymentResult;
 
     public Reservation(String paymentType, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuest, int amount) {
@@ -62,8 +67,6 @@ public class Reservation {
     public void updateReservation(Member guest, Accommodation accommodation) {
         this.setGuest(guest);
         this.setAccommodation(accommodation);
-        guest.getReservations().add(this);
-        accommodation.getReservations().add(this);
     }
 
     public void updatePayment(PaymentResult paymentResult) {
@@ -72,7 +75,6 @@ public class Reservation {
     }
 
     public void cancelReservation() {
-        accommodation.getReservations().remove(this);
         this.setReservationStatus(ReservationStatus.CANCELED);
     }
 }

@@ -7,13 +7,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -25,8 +27,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Accommodation {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
+    @Column(name = "ACCOMMODATION_ID")
     private Long id;
 
     private String accommodationName;
@@ -50,10 +52,11 @@ public class Accommodation {
     @Lob
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
     private Member host;
 
-    @OneToMany
+    @OneToMany(mappedBy = "accommodation")
     private List<Reservation> reservations = new ArrayList<>();
 
     public Accommodation(String accommodationName, int price, String accommodationType, String location, LocalDate checkInDate, LocalDate checkOutDate, LocalTime checkInTime, LocalTime checkOutTime, int maximumNumberOfGuest, String description) {
