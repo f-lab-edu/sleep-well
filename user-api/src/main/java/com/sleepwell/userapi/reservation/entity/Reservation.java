@@ -30,9 +30,6 @@ public class Reservation {
     @Column(name = "RESERVATION_ID")
     private Long id;
 
-    //TODO: PaymentType을 적용시킬지, 적용시킨다면 어떻게 적용시킬지 고민
-    private String paymentType;
-
     private LocalDate checkInDate;
 
     private LocalDate checkOutDate;
@@ -57,8 +54,7 @@ public class Reservation {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "reservation")
     private PaymentResult paymentResult;
 
-    public Reservation(String paymentType, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuest, int amount) {
-        this.paymentType = paymentType;
+    public Reservation(LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuest, int amount) {
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
         this.numberOfGuest = numberOfGuest;

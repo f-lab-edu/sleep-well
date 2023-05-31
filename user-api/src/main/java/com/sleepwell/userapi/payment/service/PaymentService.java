@@ -25,8 +25,8 @@ public class PaymentService {
 
     private static final String IMP_PREFIX = "imp_";
 
-    public PaymentResult createPaymentResult(String impUid, String merchantUid) {
-        Reservation reservation = reservationService.getReservation(Long.valueOf(merchantUid));
+    public PaymentResult createPaymentResult(String impUid, Long merchantUid) {
+        Reservation reservation = reservationService.getReservation(merchantUid);
         Payment paymentResponse = getPaymentResponse(impUid);
 
         if (!PaymentStatus.PAID.isMatch(paymentResponse.getStatus())) {

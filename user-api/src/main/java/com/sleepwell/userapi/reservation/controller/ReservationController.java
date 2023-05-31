@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/reservation")
 @RequiredArgsConstructor
@@ -23,7 +25,7 @@ public class ReservationController {
      * 숙소 예약 기능
      */
     @PostMapping
-    public ReservationDetailInfoDto createReservation(@RequestBody ReservationRequestDto reservationRequestDto) {
+    public ReservationDetailInfoDto createReservation(@RequestBody @Valid ReservationRequestDto reservationRequestDto) {
         Reservation reservation = reservationRequestDto.toEntity();
         Reservation createdReservation = reservationService.createReservation(reservation, reservationRequestDto.getAccommodationId(), reservationRequestDto.getGuestId());
         return ReservationDetailInfoDto.fromEntity(createdReservation);
