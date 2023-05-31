@@ -4,6 +4,7 @@ import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
+import com.sleepwell.userapi.error.exception.BaseException;
 import com.sleepwell.userapi.payment.entity.PaymentResult;
 import com.sleepwell.userapi.payment.repository.PaymentRepository;
 import com.sleepwell.userapi.reservation.entity.Reservation;
@@ -62,7 +63,7 @@ class PaymentServiceTest {
         when(payment.getStatus()).thenReturn("FAILED");
 
         //then
-        assertThrows(RuntimeException.class, () -> paymentService.createPaymentResult("1", "1"));
+        assertThrows(BaseException.class, () -> paymentService.createPaymentResult("1", "1"));
     }
 
     @DisplayName("결제 금액이 예약 금액과 일치하지 않으면 예외 발생")
@@ -74,7 +75,7 @@ class PaymentServiceTest {
         when(reservation.getAmount()).thenReturn(1);
 
         //then
-        assertThrows(RuntimeException.class, () -> paymentService.createPaymentResult("1", "1"));
+        assertThrows(BaseException.class, () -> paymentService.createPaymentResult("1", "1"));
     }
 
     @DisplayName("정상 결제 요청 시 결제 정보 반환")

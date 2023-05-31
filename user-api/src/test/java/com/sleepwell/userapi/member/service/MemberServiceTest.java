@@ -1,5 +1,6 @@
 package com.sleepwell.userapi.member.service;
 
+import com.sleepwell.userapi.error.exception.BaseException;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -38,7 +39,7 @@ class MemberServiceTest {
         when(memberRepository.existsByEmail(any())).thenReturn(true);
 
         //then
-        assertThrows(RuntimeException.class, () -> memberService.createMember(member));
+        assertThrows(BaseException.class, () -> memberService.createMember(member));
     }
 
     @DisplayName("정상 회원 정보 입력 시 회원 정보 반환")
