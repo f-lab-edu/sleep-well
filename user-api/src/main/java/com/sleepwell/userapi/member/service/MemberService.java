@@ -1,5 +1,7 @@
 package com.sleepwell.userapi.member.service;
 
+import com.sleepwell.userapi.error.ErrorStatus;
+import com.sleepwell.userapi.error.exception.BaseException;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.member.repository.MemberRepository;
 import com.sleepwell.userapi.util.JwtProvider;
@@ -27,7 +29,7 @@ public class MemberService {
 
     public Member createMember(Member member) {
         if (memberRepository.existsByEmail(member.getEmail())) {
-            throw new RuntimeException("중복된 이메일입니다. 다시 입력해주세요.");
+            throw new BaseException(ErrorStatus.DUPLICATED_EMAIL_FOUND);
         }
 
         member.setPassword(passwordEncoder.encode(member.getPassword()));

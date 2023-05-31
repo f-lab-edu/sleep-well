@@ -4,6 +4,8 @@ import com.sleepwell.userapi.accommodation.dto.AccommodationSearchDto;
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import com.sleepwell.userapi.accommodation.repository.AccommodationCustomRepository;
 import com.sleepwell.userapi.accommodation.repository.AccommodationRepository;
+import com.sleepwell.userapi.error.ErrorStatus;
+import com.sleepwell.userapi.error.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,7 @@ public class AccommodationService {
         List<Accommodation> accommodations = accommodationCustomRepository.findAllByAccommodationSearchDto(accommodationSearchDto);
 
         if (accommodations.isEmpty()) {
-            throw new RuntimeException("조건에 맞는 숙소가 존재하지 않습니다.");
+            throw new BaseException(ErrorStatus.ROOM_NOT_FOUND);
         }
         return accommodations;
     }
@@ -29,6 +31,6 @@ public class AccommodationService {
     public Accommodation getAccommodation(Long accommodationId) {
         Optional<Accommodation> accommodation = accommodationRepository.findById(accommodationId);
 
-        return accommodation.orElseThrow(() -> new RuntimeException("존재하지 않는 숙소입니다."));
+        return accommodation.orElseThrow(() -> new BaseException(ErrorStatus.ROOM_NOT_FOUND));
     }
 }

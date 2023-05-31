@@ -4,6 +4,7 @@ import com.sleepwell.userapi.accommodation.dto.AccommodationSearchDto;
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import com.sleepwell.userapi.accommodation.repository.AccommodationCustomRepository;
 import com.sleepwell.userapi.accommodation.repository.AccommodationRepository;
+import com.sleepwell.userapi.error.exception.BaseException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +42,7 @@ class AccommodationServiceTest {
         when(accommodationCustomRepository.findAllByAccommodationSearchDto(any())).thenReturn(Collections.emptyList());
 
         //then
-        assertThrows(RuntimeException.class, () -> accommodationService.findAccommodation(accommodationSearchDto));
+        assertThrows(BaseException.class, () -> accommodationService.findAccommodation(accommodationSearchDto));
     }
 
     @DisplayName("조건에 맞는 숙소가 존재할 시 숙소 리스트 반환")
@@ -64,7 +65,7 @@ class AccommodationServiceTest {
         when(accommodationRepository.findById(any())).thenReturn(Optional.empty());
 
         //then
-        assertThrows(RuntimeException.class, () -> accommodationService.getAccommodation(1L));
+        assertThrows(BaseException.class, () -> accommodationService.getAccommodation(1L));
     }
 
     @DisplayName("유효한 숙소 조회 시 숙소 반환")

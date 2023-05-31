@@ -2,6 +2,7 @@ package com.sleepwell.userapi.reservation.service;
 
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import com.sleepwell.userapi.accommodation.service.AccommodationService;
+import com.sleepwell.userapi.error.exception.BaseException;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.member.service.MemberService;
 import com.sleepwell.userapi.reservation.entity.Reservation;
@@ -63,7 +64,7 @@ class ReservationServiceTest {
         when(memberService.getMember(any())).thenReturn(member);
 
         //then
-        assertThrows(RuntimeException.class, () -> reservationService.createReservation(reservation, 1L, 1L));
+        assertThrows(BaseException.class, () -> reservationService.createReservation(reservation, 1L, 1L));
     }
 
     @DisplayName("최대 숙박 인원을 초과하면 예약 불가")
@@ -78,7 +79,7 @@ class ReservationServiceTest {
         reservation.setNumberOfGuest(accommodation.getMaximumNumberOfGuest() + 1);
 
         //then
-        assertThrows(RuntimeException.class, () -> reservationService.createReservation(reservation, 1L, 1L));
+        assertThrows(BaseException.class, () -> reservationService.createReservation(reservation, 1L, 1L));
     }
 
     @DisplayName("정상 예약 생성 요청 시 예약 정보 반환")
@@ -101,7 +102,7 @@ class ReservationServiceTest {
         when(reservationRepository.findById(any())).thenReturn(Optional.empty());
 
         //then
-        assertThrows(RuntimeException.class, () -> reservationService.getReservation(1L));
+        assertThrows(BaseException.class, () -> reservationService.getReservation(1L));
     }
 
     @DisplayName("정상 조회 요청 시 예약 정보 반환")
