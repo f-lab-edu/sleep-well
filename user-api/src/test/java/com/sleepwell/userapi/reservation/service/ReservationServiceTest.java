@@ -4,7 +4,7 @@ import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import com.sleepwell.userapi.accommodation.service.AccommodationService;
 import com.sleepwell.userapi.error.exception.BaseException;
 import com.sleepwell.userapi.member.entity.Member;
-import com.sleepwell.userapi.member.repository.MemberRepository;
+import com.sleepwell.userapi.member.service.MemberService;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import com.sleepwell.userapi.reservation.repository.ReservationRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 class ReservationServiceTest {
 
     @Mock
-    private MemberRepository memberRepository;
+    private MemberService memberService;
 
     @Mock
     private ReservationRepository reservationRepository;
@@ -59,9 +59,9 @@ class ReservationServiceTest {
     @Test
     void createReservationWithInvalidCheckInDate() {
         //given
-        when(reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(true);
+        when(reservationRepository.existsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(true);
         when(accommodationService.getAccommodation(any())).thenReturn(accommodation);
-        when(memberRepository.findById(any())).thenReturn(member);
+        when(memberService.getMember(any())).thenReturn(member);
 
         //then
         assertThrows(BaseException.class, () -> reservationService.createReservation(reservation, 1L, 1L));
@@ -71,9 +71,9 @@ class ReservationServiceTest {
     @Test
     void createReservationWithInvalidNumberOfGuest() {
         //given
-        when(reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
+        when(reservationRepository.existsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
         when(accommodationService.getAccommodation(any())).thenReturn(accommodation);
-        when(memberRepository.findById(any())).thenReturn(member);
+        when(memberService.getMember(any())).thenReturn(member);
 
         //when
         reservation.setNumberOfGuest(accommodation.getMaximumNumberOfGuest() + 1);
@@ -86,10 +86,10 @@ class ReservationServiceTest {
     @Test
     void createReservationWithValidCheckInDate() {
         //given
-        when(reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
+        when(reservationRepository.existsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
         when(reservationRepository.save(any())).thenReturn(reservation);
         when(accommodationService.getAccommodation(any())).thenReturn(accommodation);
-        when(memberRepository.findById(any())).thenReturn(member);
+        when(memberService.getMember(any())).thenReturn(member);
 
         //then
         assertEquals(reservationService.createReservation(reservation, 1L, 1L), reservation);

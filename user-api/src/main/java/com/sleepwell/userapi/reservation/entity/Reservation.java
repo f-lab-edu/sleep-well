@@ -3,17 +3,34 @@ package com.sleepwell.userapi.reservation.entity;
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.payment.entity.PaymentResult;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation {
 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "RESERVATION_ID")
     private Long id;
 
+    //TODO: PaymentType을 적용시킬지, 적용시킨다면 어떻게 적용시킬지 고민
     private String paymentType;
 
     private LocalDate checkInDate;
@@ -22,16 +39,22 @@ public class Reservation {
 
     private LocalDate reservedDate;
 
+    @Enumerated
     private ReservationStatus reservationStatus;
 
     private int numberOfGuest;
 
     private int amount;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID")
     private Member guest;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ACCOMMODATION_ID")
     private Accommodation accommodation;
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "reservation")
     private PaymentResult paymentResult;
 
     public Reservation(String paymentType, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuest, int amount) {
@@ -45,8 +68,6 @@ public class Reservation {
     public void updateReservation(Member guest, Accommodation accommodation) {
         this.setGuest(guest);
         this.setAccommodation(accommodation);
-        guest.getReservations().add(this);
-        accommodation.getReservations().add(this);
     }
 
     public void updatePayment(PaymentResult paymentResult) {
@@ -55,7 +76,6 @@ public class Reservation {
     }
 
     public void cancelReservation() {
-        accommodation.getReservations().remove(this);
         this.setReservationStatus(ReservationStatus.CANCELED);
     }
 }

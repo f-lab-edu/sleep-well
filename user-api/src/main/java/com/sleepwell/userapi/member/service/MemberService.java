@@ -35,4 +35,9 @@ public class MemberService {
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         return memberRepository.save(member);
     }
+
+    public Member getMember(Long memberId) {
+        //TODO: BaseException을 사용한 예외처리로 변경 예정
+        return memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+    }
 }
