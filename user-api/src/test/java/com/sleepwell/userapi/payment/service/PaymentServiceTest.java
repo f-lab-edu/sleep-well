@@ -63,7 +63,7 @@ class PaymentServiceTest {
         when(payment.getStatus()).thenReturn("FAILED");
 
         //then
-        assertThrows(BaseException.class, () -> paymentService.createPaymentResult("1", "1"));
+        assertThrows(BaseException.class, () -> paymentService.createPaymentResult("1", 1L));
     }
 
     @DisplayName("결제 금액이 예약 금액과 일치하지 않으면 예외 발생")
@@ -75,7 +75,7 @@ class PaymentServiceTest {
         when(reservation.getAmount()).thenReturn(1);
 
         //then
-        assertThrows(BaseException.class, () -> paymentService.createPaymentResult("1", "1"));
+        assertThrows(BaseException.class, () -> paymentService.createPaymentResult("1", 1L));
     }
 
     @DisplayName("정상 결제 요청 시 결제 정보 반환")
@@ -92,6 +92,6 @@ class PaymentServiceTest {
         when(paymentRepository.save(any())).thenReturn(paymentResult);
 
         //then
-        assertEquals(paymentResult, paymentService.createPaymentResult("1", "1"));
+        assertEquals(paymentResult, paymentService.createPaymentResult("1", 1L));
     }
 }
