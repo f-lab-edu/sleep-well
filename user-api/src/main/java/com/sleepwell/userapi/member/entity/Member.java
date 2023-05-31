@@ -1,17 +1,24 @@
 package com.sleepwell.userapi.member.entity;
 
-import com.sleepwell.userapi.accommodation.entity.Accommodation;
-import com.sleepwell.userapi.reservation.entity.Reservation;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Getter
 @Setter
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MEMBER_ID")
     private Long id;
 
     private String name;
@@ -19,10 +26,6 @@ public class Member {
     private String email;
 
     private String password;
-
-    private List<Reservation> reservations = new ArrayList<>();
-
-    private List<Accommodation> accommodations = new ArrayList<>();
 
     public Member(String name, String email, String password) {
         this.name = name;

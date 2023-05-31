@@ -1,5 +1,7 @@
 package com.sleepwell.userapi.member.service;
 
+import com.sleepwell.userapi.error.ErrorStatus;
+import com.sleepwell.userapi.error.exception.BaseException;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("잘못된 이메일 주소입니다."));
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new BaseException(ErrorStatus.AUTHENTICATION_FAIL));
 
         return new User(member.getEmail(), member.getPassword(), new ArrayList<>());
     }

@@ -2,8 +2,9 @@ package com.sleepwell.userapi.reservation.service;
 
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import com.sleepwell.userapi.accommodation.service.AccommodationService;
+import com.sleepwell.userapi.error.exception.BaseException;
 import com.sleepwell.userapi.member.entity.Member;
-import com.sleepwell.userapi.member.repository.MemberRepository;
+import com.sleepwell.userapi.member.service.MemberService;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import com.sleepwell.userapi.reservation.repository.ReservationRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +29,7 @@ import static org.mockito.Mockito.when;
 class ReservationServiceTest {
 
     @Mock
-    private MemberRepository memberRepository;
+    private MemberService memberService;
 
     @Mock
     private ReservationRepository reservationRepository;
@@ -58,37 +59,37 @@ class ReservationServiceTest {
     @Test
     void createReservationWithInvalidCheckInDate() {
         //given
-        when(reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(true);
+        when(reservationRepository.existsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(true);
         when(accommodationService.getAccommodation(any())).thenReturn(accommodation);
-        when(memberRepository.findById(any())).thenReturn(member);
+        when(memberService.getMember(any())).thenReturn(member);
 
         //then
-        assertThrows(RuntimeException.class, () -> reservationService.createReservation(reservation, 1L, 1L));
+        assertThrows(BaseException.class, () -> reservationService.createReservation(reservation, 1L, 1L));
     }
 
     @DisplayName("최대 숙박 인원을 초과하면 예약 불가")
     @Test
     void createReservationWithInvalidNumberOfGuest() {
         //given
-        when(reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
+        when(reservationRepository.existsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
         when(accommodationService.getAccommodation(any())).thenReturn(accommodation);
-        when(memberRepository.findById(any())).thenReturn(member);
+        when(memberService.getMember(any())).thenReturn(member);
 
         //when
         reservation.setNumberOfGuest(accommodation.getMaximumNumberOfGuest() + 1);
 
         //then
-        assertThrows(RuntimeException.class, () -> reservationService.createReservation(reservation, 1L, 1L));
+        assertThrows(BaseException.class, () -> reservationService.createReservation(reservation, 1L, 1L));
     }
 
     @DisplayName("정상 예약 생성 요청 시 예약 정보 반환")
     @Test
     void createReservationWithValidCheckInDate() {
         //given
-        when(reservationRepository.exitsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
+        when(reservationRepository.existsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
         when(reservationRepository.save(any())).thenReturn(reservation);
         when(accommodationService.getAccommodation(any())).thenReturn(accommodation);
-        when(memberRepository.findById(any())).thenReturn(member);
+        when(memberService.getMember(any())).thenReturn(member);
 
         //then
         assertEquals(reservationService.createReservation(reservation, 1L, 1L), reservation);
@@ -101,7 +102,7 @@ class ReservationServiceTest {
         when(reservationRepository.findById(any())).thenReturn(Optional.empty());
 
         //then
-        assertThrows(RuntimeException.class, () -> reservationService.getReservation(1L));
+        assertThrows(BaseException.class, () -> reservationService.getReservation(1L));
     }
 
     @DisplayName("정상 조회 요청 시 예약 정보 반환")
