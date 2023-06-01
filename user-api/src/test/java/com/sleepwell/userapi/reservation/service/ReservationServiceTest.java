@@ -50,7 +50,7 @@ class ReservationServiceTest {
     void setup() {
         member = mock(Member.class);
 
-        accommodation = new Accommodation("숙소 이름", 1_000_000, "숙소 타입", "지역", LocalDate.of(2023, 4, 24), LocalDate.of(2023, 4, 25), LocalTime.of(15, 0), LocalTime.of(11, 0), 10, "상세 정보");
+        accommodation = new Accommodation("숙소 이름", 1_000_000, "숙소 타입", "지역", LocalTime.of(15, 0), LocalTime.of(11, 0), 10, "상세 정보");
 
         reservation = new Reservation(LocalDate.of(2023, 4, 24), LocalDate.of(2023, 4, 24), 10, 100);
     }
@@ -59,7 +59,7 @@ class ReservationServiceTest {
     @Test
     void createReservationWithInvalidCheckInDate() {
         //given
-        when(reservationRepository.existsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(true);
+        when(reservationRepository.existsReservationInAccommodationThatDay(any(), any(), any())).thenReturn(true);
         when(accommodationService.getAccommodation(any())).thenReturn(accommodation);
         when(memberService.getMember(any())).thenReturn(member);
 
@@ -71,7 +71,7 @@ class ReservationServiceTest {
     @Test
     void createReservationWithInvalidNumberOfGuest() {
         //given
-        when(reservationRepository.existsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
+        when(reservationRepository.existsReservationInAccommodationThatDay(any(), any(), any())).thenReturn(false);
         when(accommodationService.getAccommodation(any())).thenReturn(accommodation);
         when(memberService.getMember(any())).thenReturn(member);
 
@@ -86,7 +86,7 @@ class ReservationServiceTest {
     @Test
     void createReservationWithValidCheckInDate() {
         //given
-        when(reservationRepository.existsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(any(), any(), any())).thenReturn(false);
+        when(reservationRepository.existsReservationInAccommodationThatDay(any(), any(), any())).thenReturn(false);
         when(reservationRepository.save(any())).thenReturn(reservation);
         when(accommodationService.getAccommodation(any())).thenReturn(accommodation);
         when(memberService.getMember(any())).thenReturn(member);
