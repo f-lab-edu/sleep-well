@@ -15,10 +15,12 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("select count(r) > 0 " +
             "from Reservation r " +
             "where r.accommodation.id = :accommodationId " +
-            "and (r.checkInDate between :checkInDate and :checkOutDate " +
-            "or r.checkOutDate between :checkInDate and :checkOutDate)")
+            "and (" +
+                "(r.checkInDate <= :checkInDate and :checkInDate < r.checkOutDate) " +
+                "or (r.checkInDate < :checkOutDate and :checkOutDate <= r.checkOutDate)" +
+            ")")
     boolean existsReservationInAccommodationThatDay(Long accommodationId, LocalDate checkInDate, LocalDate checkOutDate);
 
-    List<Reservation> findByReservationStatusAndReservedDateLessThanEqual(ReservationStatus reservationStatus, LocalDate localDate);
+    List<Reservation> findByReservationStatusAndReservedDateGreaterThanEqual(ReservationStatus reservationStatus, LocalDate localDate);
 
 }

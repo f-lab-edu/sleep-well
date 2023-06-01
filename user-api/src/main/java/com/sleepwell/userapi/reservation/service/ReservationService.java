@@ -59,7 +59,7 @@ public class ReservationService {
     @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
     public void cancelNotPayedReservations() {
         log.info("{} - 미지불 고객 예약 취소 시작", LocalDateTime.now());
-        List<Reservation> reservations = reservationRepository.findByReservationStatusAndReservedDateLessThanEqual(ReservationStatus.BEFORE_PAYED, LocalDate.now().minusDays(PAYMENT_GRACE_PERIOD));
+        List<Reservation> reservations = reservationRepository.findByReservationStatusAndReservedDateGreaterThanEqual(ReservationStatus.BEFORE_PAYED, LocalDate.now().minusDays(PAYMENT_GRACE_PERIOD));
 
         for (Reservation reservation : reservations) {
             reservation.cancelReservation();
