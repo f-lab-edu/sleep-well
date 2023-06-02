@@ -27,7 +27,7 @@ public class AccommodationCustomRepositoryImpl implements AccommodationCustomRep
                         locationEq(accommodationSearchDto.getLocation()),
                         notExistsReservationBetweenDates(accommodationSearchDto.getCheckInDate(), accommodationSearchDto.getCheckOutDate()),
                         priceBetween(accommodationSearchDto.getMinPrice(), accommodationSearchDto.getMaxPrice()),
-                        numberOfGuestLoe(accommodationSearchDto.getNumberOfGuest()))
+                        numberOfGuestGoe(accommodationSearchDto.getNumberOfGuest()))
                 .fetch();
     }
 
@@ -58,12 +58,18 @@ public class AccommodationCustomRepositoryImpl implements AccommodationCustomRep
     }
 
     private BooleanExpression priceBetween(Integer minPrice, Integer maxPrice) {
-        return (minPrice != null && maxPrice != null) ? accommodation.price.between(minPrice, maxPrice) : null;
+        if (minPrice == null && maxPrice == null) {
+            return null;
+        } else if (minPrice == null) {
+            return accommodation.price.loe(maxPrice);
+        } else if (maxPrice == null) {
+            return accommodation.price.goe(minPrice);
+        }
+
+        return accommodation.price.between(minPrice, maxPrice);
     }
 
-    private BooleanExpression numberOfGuestLoe(Integer numberOfGuest) {
-        return numberOfGuest != null ? accommodation.maximumNumberOfGuest.loe(numberOfGuest) : null;
+    private BooleanExpression numberOfGuestGoe(Integer numberOfGuest) {
+        return numberOfGuest != null ? accommodation.maximumNumberOfGuest.goe(numberOfGuest) : null;
     }
-
-
 }
