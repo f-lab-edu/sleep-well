@@ -120,7 +120,7 @@ public class AccommodationCustomRepositoryTest {
 
             @DisplayName("일치하는 모든 숙소 반환")
             @Test
-            void withEqualAccommodationName() {
+            void withEqualLocation() {
                 //when
                 List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, "지역1", null, null, null, null, null));
 
