@@ -43,7 +43,7 @@ public class AccommodationCustomRepositoryImpl implements AccommodationCustomRep
         return location != null ? accommodation.location.eq(location) : null;
     }
 
-    // 예약들 중 이런 정보가 있으면 탈락
+    //TODO: FIX - Not Work...
     private BooleanExpression notExistsReservationBetweenDates(LocalDate checkInDate, LocalDate checkOutDate) {
         if (checkInDate == null && checkOutDate == null) {
             return null;
@@ -53,8 +53,9 @@ public class AccommodationCustomRepositoryImpl implements AccommodationCustomRep
             checkOutDate = checkInDate.plusDays(1);
         }
 
-        return accommodation.reservations.any().checkInDate.notBetween(checkInDate, checkOutDate)
-                .and(accommodation.reservations.any().checkOutDate.notBetween(checkInDate, checkOutDate));
+        return accommodation.reservations
+                .any().checkInDate.notBetween(checkInDate, checkOutDate.minusDays(1))
+                .and(accommodation.reservations.any().checkOutDate.notBetween(checkInDate.plusDays(1), checkOutDate));
     }
 
     private BooleanExpression priceBetween(Integer minPrice, Integer maxPrice) {
