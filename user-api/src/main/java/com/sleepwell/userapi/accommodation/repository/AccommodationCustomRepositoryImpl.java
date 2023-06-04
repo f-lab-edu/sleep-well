@@ -28,6 +28,7 @@ public class AccommodationCustomRepositoryImpl implements AccommodationCustomRep
                         notExistsReservationBetweenDates(accommodationSearchDto.getCheckInDate(), accommodationSearchDto.getCheckOutDate()),
                         priceBetween(accommodationSearchDto.getMinPrice(), accommodationSearchDto.getMaxPrice()),
                         numberOfGuestGoe(accommodationSearchDto.getNumberOfGuest()))
+                .distinct()
                 .fetch();
     }
 
@@ -43,7 +44,6 @@ public class AccommodationCustomRepositoryImpl implements AccommodationCustomRep
         return location != null ? accommodation.location.eq(location) : null;
     }
 
-    //TODO: FIX - Not Work...
     private BooleanExpression notExistsReservationBetweenDates(LocalDate checkInDate, LocalDate checkOutDate) {
         if (checkInDate == null && checkOutDate == null) {
             return null;
@@ -53,8 +53,7 @@ public class AccommodationCustomRepositoryImpl implements AccommodationCustomRep
             checkOutDate = checkInDate.plusDays(1);
         }
 
-        return accommodation.reservations
-                .any().checkInDate.notBetween(checkInDate, checkOutDate.minusDays(1))
+        return accommodation.reservations.any().checkInDate.notBetween(checkInDate, checkOutDate.minusDays(1))
                 .and(accommodation.reservations.any().checkOutDate.notBetween(checkInDate.plusDays(1), checkOutDate));
     }
 
