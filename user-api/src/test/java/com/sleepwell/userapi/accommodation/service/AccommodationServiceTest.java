@@ -5,6 +5,8 @@ import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import com.sleepwell.userapi.accommodation.repository.AccommodationCustomRepository;
 import com.sleepwell.userapi.accommodation.repository.AccommodationRepository;
 import com.sleepwell.userapi.error.exception.BaseException;
+import com.sleepwell.userapi.member.entity.Member;
+import com.sleepwell.userapi.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +26,9 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AccommodationServiceTest {
+
+    @Mock
+    MemberRepository memberRepository;
 
     @Mock
     AccommodationRepository accommodationRepository;
@@ -78,5 +83,20 @@ class AccommodationServiceTest {
         //then
         Accommodation findAccommodation = accommodationService.getAccommodation(1L);
         assertEquals(mockAccommodation, findAccommodation);
+    }
+
+    @DisplayName("유효한 숙소 등록 요청 시 생성된 숙소 반환")
+    @Test
+    void createAccommodationWithValidRequest() {
+        //given
+        Accommodation accommodation = mock(Accommodation.class);
+        when(memberRepository.getReferenceById(any())).thenReturn(mock(Member.class));
+        when(accommodationRepository.save(any())).thenReturn(accommodation);
+
+        //when
+        Accommodation createdAccommodation = accommodationService.createAccommodation(1L, accommodation);
+
+        //then
+        assertEquals(accommodation, createdAccommodation);
     }
 }
