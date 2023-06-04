@@ -6,6 +6,8 @@ import com.sleepwell.userapi.accommodation.repository.AccommodationCustomReposit
 import com.sleepwell.userapi.accommodation.repository.AccommodationRepository;
 import com.sleepwell.userapi.error.ErrorStatus;
 import com.sleepwell.userapi.error.exception.BaseException;
+import com.sleepwell.userapi.member.entity.Member;
+import com.sleepwell.userapi.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AccommodationService {
 
+    private final MemberRepository memberRepository;
     private final AccommodationRepository accommodationRepository;
     private final AccommodationCustomRepository accommodationCustomRepository;
 
@@ -26,6 +29,12 @@ public class AccommodationService {
             throw new BaseException(ErrorStatus.ROOM_NOT_FOUND);
         }
         return accommodations;
+    }
+
+    public Accommodation createAccommodation(Long memberId, Accommodation accommodation) {
+        Member member = memberRepository.getReferenceById(memberId);
+        accommodation.setHost(member);
+        return accommodationRepository.save(accommodation);
     }
 
     public Accommodation getAccommodation(Long accommodationId) {
