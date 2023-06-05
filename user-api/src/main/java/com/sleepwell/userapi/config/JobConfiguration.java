@@ -3,10 +3,10 @@ package com.sleepwell.userapi.config;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import com.sleepwell.userapi.reservation.entity.ReservationStatus;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
@@ -21,7 +21,6 @@ import javax.persistence.EntityManagerFactory;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-@Slf4j
 @Configuration
 @RequiredArgsConstructor
 public class JobConfiguration {
@@ -41,7 +40,7 @@ public class JobConfiguration {
     }
 
     @Bean
-    @StepScope
+    @JobScope
     public Step cancelNotPayedReservationStep() {
         return stepBuilderFactory.get("cancelNotPayedReservationStep")
                 .<Reservation, Reservation>chunk(CHUNK_SIZE)
@@ -56,17 +55,20 @@ public class JobConfiguration {
     public JpaPagingItemReader<Reservation> notPayPayedReservationReader() {
         HashMap<String, Object> paramValues = new HashMap<>();
         paramValues.put("deadline", LocalDate.now().minusDays(PAYMENT_GRACE_PERIOD));
+        paramValues.put("reservationStatus", ReservationStatus.BEFORE_PAYED);
 
         return new JpaPagingItemReaderBuilder<Reservation>()
                 .name("notPayPayedReservationReader")
                 .entityManagerFactory(entityManagerFactory)
-                .queryString("select r from Reservation r where r.reservedDate <= : and r.reservationStatus = BEFORE_PAYED")
+                .queryString("select r from Reservation r where r.reservedDate <= :deadline and r.reservationStatus = :reservationStatus")
                 .parameterValues(paramValues)
                 .pageSize(CHUNK_SIZE)
                 .build();
     }
 
-    private ItemProcessor<Reservation, Reservation> cancelNotPayedReservationProcessor() {
+    @Bean
+    @StepScope
+    public ItemProcessor<Reservation, Reservation> cancelNotPayedReservationProcessor() {
         return reservation -> {
             reservation.setReservationStatus(ReservationStatus.CANCELED);
             return reservation;
