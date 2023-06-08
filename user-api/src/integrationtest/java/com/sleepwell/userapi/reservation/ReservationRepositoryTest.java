@@ -41,11 +41,7 @@ class ReservationRepositoryTest {
     @Nested
     class CheckReservationDate {
 
-        private Member member;
-
         private Accommodation accommodation;
-
-        private Reservation reservation;
 
         private LocalDate checkInDate;
 
@@ -54,11 +50,12 @@ class ReservationRepositoryTest {
         @BeforeEach
         void setUp() {
             //given
-            checkInDate = LocalDate.now();
-            checkOutDate = checkInDate.plusDays(10);
-            member = memberRepository.save(new Member("사용자 이름", "email@email.com", "password"));
+            checkInDate = LocalDate.of(2023, 6, 8);
+            checkOutDate = LocalDate.of(2023, 6, 10);
+
+            Member member = memberRepository.save(new Member("사용자 이름", "email@email.com", "password"));
+            Reservation reservation = reservationRepository.save(new Reservation(checkInDate, checkOutDate, LocalDate.of(2023, 6, 8), 1, 1000));
             accommodation = accommodationRepository.save(new Accommodation("숙소 이름", 1000, "HOTEL", "지역", LocalTime.of(11, 0), LocalTime.of(15, 0), 10, "세부사항"));
-            reservation = reservationRepository.save(new Reservation(checkInDate, checkOutDate, LocalDate.now(), 1, 1000));
             reservation.updateReservation(member, accommodation);
         }
 
@@ -143,7 +140,7 @@ class ReservationRepositoryTest {
         void setup() {
             //given
             for (int i = 0; i < numberOfReservation; i++) {
-                Reservation reservation = reservationRepository.save(new Reservation(LocalDate.now(), LocalDate.now().plusDays(1), LocalDate.now(), 1, 1000));
+                Reservation reservation = reservationRepository.save(new Reservation(LocalDate.of(2023, 6, 8), LocalDate.of(2023, 6, 10), LocalDate.of(2023, 6, 8), 1, 1000));
                 reservation.setReservationStatus(ReservationStatus.BEFORE_PAYED);
             }
         }
@@ -152,7 +149,7 @@ class ReservationRepositoryTest {
         @Test
         void withDifferentReservationStatus() {
             //when
-            List<Reservation> result = reservationRepository.findByReservationStatusAndReservedDateGreaterThanEqual(ReservationStatus.RESERVED, LocalDate.now());
+            List<Reservation> result = reservationRepository.findByReservationStatusAndReservedDateGreaterThanEqual(ReservationStatus.RESERVED, LocalDate.of(2023, 6, 8));
 
             //then
             assertTrue(result.isEmpty());
@@ -162,7 +159,7 @@ class ReservationRepositoryTest {
         @Test
         void withValidReservationStatusAndInValidReservedDate() {
             //when
-            List<Reservation> result = reservationRepository.findByReservationStatusAndReservedDateGreaterThanEqual(ReservationStatus.BEFORE_PAYED, LocalDate.now().plusDays(1));
+            List<Reservation> result = reservationRepository.findByReservationStatusAndReservedDateGreaterThanEqual(ReservationStatus.BEFORE_PAYED, LocalDate.of(2023, 6, 10));
 
             //then
             assertTrue(result.isEmpty());
@@ -172,12 +169,12 @@ class ReservationRepositoryTest {
         @Test
         void withValidReservationStatusAndValidReservedDate() {
             //when
-            List<Reservation> result = reservationRepository.findByReservationStatusAndReservedDateGreaterThanEqual(ReservationStatus.BEFORE_PAYED, LocalDate.now());
+            List<Reservation> result = reservationRepository.findByReservationStatusAndReservedDateGreaterThanEqual(ReservationStatus.BEFORE_PAYED, LocalDate.of(2023, 6, 8));
 
             //then
             assertEquals(result.size(), numberOfReservation);
             assertEquals(ReservationStatus.BEFORE_PAYED, result.get(0).getReservationStatus());
-            assertTrue(result.get(0).getReservedDate().isAfter(LocalDate.now()) || result.get(0).getReservedDate().isEqual(LocalDate.now()));
+            assertTrue(result.get(0).getReservedDate().isAfter(LocalDate.of(2023, 6, 8)) || result.get(0).getReservedDate().isEqual(LocalDate.of(2023, 6, 8)));
         }
     }
 }
