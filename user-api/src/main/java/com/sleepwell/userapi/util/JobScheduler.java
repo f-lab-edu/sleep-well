@@ -28,7 +28,6 @@ public class JobScheduler {
             log.info("미결제 예약에 대한 취소 배치 작업 정상 종료");
         } catch (JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException |
                  JobParametersInvalidException e) {
-            //TODO: 배치 작업의 비정상 종료 시 어떻게 처리할지
             log.info("미결제 예약에 대한 취소 배치 작업 비정상 종료 : {}", e.getMessage());
         }
     }
