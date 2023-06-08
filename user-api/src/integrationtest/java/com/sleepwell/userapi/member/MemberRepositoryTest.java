@@ -24,7 +24,7 @@ public class MemberRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    Member member;
+    private Member member;
 
     @BeforeEach
     void setup() {
