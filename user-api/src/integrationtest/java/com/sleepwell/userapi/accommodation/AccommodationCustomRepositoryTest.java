@@ -30,10 +30,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class AccommodationCustomRepositoryTest {
 
     @Autowired
-    AccommodationRepository accommodationRepository;
+    private AccommodationRepository accommodationRepository;
 
     @Autowired
-    ReservationRepository reservationRepository;
+    private ReservationRepository reservationRepository;
 
     @Autowired
     private AccommodationCustomRepository accommodationCustomRepository;
@@ -41,8 +41,12 @@ public class AccommodationCustomRepositoryTest {
     @BeforeEach
     void setup() {
         //given
+        LocalDate reservedDate = LocalDate.of(2023, 6, 8);
+        LocalDate checkInDate = LocalDate.of(2023, 6, 8);
+        LocalDate checkOutDate = LocalDate.of(2023, 6, 10);
+
         for (int i = 5; i < 9; i++) {
-            Reservation reservation = reservationRepository.save(new Reservation(LocalDate.now(), LocalDate.now().plusDays(2), LocalDate.now(), 1, 1000));
+            Reservation reservation = reservationRepository.save(new Reservation(checkInDate, checkOutDate, reservedDate, 1, 1000));
             Accommodation accommodation = accommodationRepository.save(new Accommodation("숙소 이름" + (i % 2), i * 1000, "숙소 타입" + (i % 2), "지역" + (i % 2), LocalTime.of(15, 0), LocalTime.of(11, 0), i, "세부 정보"));
             accommodation.getReservations().add(reservation);
             reservation.setAccommodation(accommodation);
@@ -139,7 +143,7 @@ public class AccommodationCustomRepositoryTest {
             @Test
             void withInvalidCheckInDate() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, null, LocalDate.now(), null, null, null, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, null, LocalDate.of(2023, 6, 8), null, null, null, null));
 
                 //then
                 assertTrue(result.isEmpty());
@@ -149,7 +153,7 @@ public class AccommodationCustomRepositoryTest {
             @Test
             void withInvalidCheckOutDate() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, null, null, LocalDate.now().plusDays(1), null, null, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, null, null, LocalDate.of(2023, 6, 9), null, null, null));
 
                 //then
                 assertTrue(result.isEmpty());
@@ -159,7 +163,7 @@ public class AccommodationCustomRepositoryTest {
             @Test
             void withEqualAccommodationName() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, null, LocalDate.now().minusDays(10), LocalDate.now().minusDays(9), null, null, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, null, LocalDate.of(2022, 6, 8), LocalDate.of(2022, 6, 8), null, null, null));
 
                 //then
                 assertEquals(4, result.size());
