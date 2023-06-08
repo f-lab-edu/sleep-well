@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public class Reservation {
 
     private LocalDate reservedDate;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
 
     private int numberOfGuest;
@@ -54,9 +55,11 @@ public class Reservation {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "reservation")
     private PaymentResult paymentResult;
 
-    public Reservation(LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuest, int amount) {
+    public Reservation(LocalDate checkInDate, LocalDate checkOutDate, LocalDate reservedDate, ReservationStatus reservationStatus, int numberOfGuest, int amount) {
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
+        this.reservedDate = reservedDate;
+        this.reservationStatus = reservationStatus;
         this.numberOfGuest = numberOfGuest;
         this.amount = amount;
     }

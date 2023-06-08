@@ -7,7 +7,6 @@ import com.sleepwell.userapi.error.exception.BaseException;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.member.service.MemberService;
 import com.sleepwell.userapi.reservation.entity.Reservation;
-import com.sleepwell.userapi.reservation.entity.ReservationStatus;
 import com.sleepwell.userapi.reservation.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,6 @@ public class ReservationService {
         }
 
         reservation.updateReservation(guest, accommodation);
-        reservation.setReservationStatus(ReservationStatus.BEFORE_PAYED);
         return reservationRepository.save(reservation);
     }
 

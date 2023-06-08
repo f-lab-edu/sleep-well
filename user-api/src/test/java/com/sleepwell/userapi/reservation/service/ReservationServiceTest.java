@@ -6,6 +6,7 @@ import com.sleepwell.userapi.error.exception.BaseException;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.member.service.MemberService;
 import com.sleepwell.userapi.reservation.entity.Reservation;
+import com.sleepwell.userapi.reservation.entity.ReservationStatus;
 import com.sleepwell.userapi.reservation.repository.ReservationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -52,7 +53,7 @@ class ReservationServiceTest {
 
         accommodation = new Accommodation("숙소 이름", 1_000_000, "숙소 타입", "지역", LocalDate.of(2023, 4, 24), LocalDate.of(2023, 4, 25), LocalTime.of(15, 0), LocalTime.of(11, 0), 10, "상세 정보");
 
-        reservation = new Reservation(LocalDate.of(2023, 4, 24), LocalDate.of(2023, 4, 24), 10, 100);
+        reservation = new Reservation(LocalDate.of(2023, 4, 24), LocalDate.of(2023, 4, 24), LocalDate.now(), ReservationStatus.BEFORE_PAYED, 10, 100);
     }
 
     @DisplayName("예약 일자 사이에 이미 예약이 있다면 예약 불가")
