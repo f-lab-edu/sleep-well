@@ -1,6 +1,7 @@
 package com.sleepwell.userapi.reservation.dto;
 
 import com.sleepwell.userapi.reservation.entity.Reservation;
+import com.sleepwell.userapi.reservation.entity.ReservationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -43,6 +44,6 @@ public class ReservationRequestDto {
     private final int numberOfGuest;
 
     public Reservation toEntity() {
-        return new Reservation(checkInDate, checkOutDate, LocalDate.now(), numberOfGuest, amount);
+        return new Reservation(checkInDate, checkOutDate, LocalDate.now(), ReservationStatus.BEFORE_PAYED, numberOfGuest, amount);
     }
 }
