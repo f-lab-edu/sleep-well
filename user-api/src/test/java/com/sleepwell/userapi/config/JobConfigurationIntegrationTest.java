@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBatchTest
 @SpringBootTest(classes = {TestBatchConfig.class, JobConfiguration.class})
-class JobConfigurationTest {
+class JobConfigurationIntegrationTest {
 
     @Autowired
     private ReservationRepository reservationRepository;
