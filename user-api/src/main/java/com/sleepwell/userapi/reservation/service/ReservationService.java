@@ -25,7 +25,7 @@ public class ReservationService {
         Accommodation accommodation = accommodationService.getAccommodation(accommodationId);
         Member guest = memberService.getMember(guestId);
 
-        if (reservationRepository.existsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(accommodationId, reservation.getCheckInDate(), reservation.getCheckOutDate())) {
+        if (reservationRepository.existsReservationInAccommodationThatDay(accommodationId, reservation.getCheckInDate(), reservation.getCheckOutDate())) {
             throw new BaseException(ErrorStatus.INVALID_RESERVATION_DATE);
         }
         if (accommodation.getMaximumNumberOfGuest() < reservation.getNumberOfGuest()) {

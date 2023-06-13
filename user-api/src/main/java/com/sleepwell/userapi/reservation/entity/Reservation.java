@@ -60,6 +60,7 @@ public class Reservation {
         this.checkOutDate = checkOutDate;
         this.reservedDate = reservedDate;
         this.reservationStatus = reservationStatus;
+
         this.numberOfGuest = numberOfGuest;
         this.amount = amount;
     }
@@ -67,6 +68,7 @@ public class Reservation {
     public void updateReservation(Member guest, Accommodation accommodation) {
         this.setGuest(guest);
         this.setAccommodation(accommodation);
+        accommodation.getReservations().add(this);
     }
 
     public void updatePayment(PaymentResult paymentResult) {

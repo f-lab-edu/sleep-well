@@ -45,8 +45,6 @@ public class AccommodationDetailInfoDto {
                 .price(accommodation.getPrice())
                 .accommodationType(accommodation.getAccommodationType())
                 .location(accommodation.getLocation())
-                .checkInDate(accommodation.getCheckInDate())
-                .checkOutDate(accommodation.getCheckOutDate())
                 .checkInTime(accommodation.getCheckInTime())
                 .checkOutTime(accommodation.getCheckOutTime())
                 .maximumNumberOfGuest(accommodation.getMaximumNumberOfGuest())
