@@ -64,5 +64,16 @@ configurations {
 }
 
 test {
+    filter {
+        excludeTestsMatching "*IntegrationTest"
+    }
+    useJUnitPlatform()
+}
+
+tasks.register('integrationTest', Test) {
+    group = 'verification'
+    filter {
+        includeTestsMatching "*IntegrationTest"
+    }
     useJUnitPlatform()
 }

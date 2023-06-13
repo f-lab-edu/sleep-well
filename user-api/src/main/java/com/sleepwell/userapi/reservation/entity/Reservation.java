@@ -54,9 +54,10 @@ public class Reservation {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "reservation")
     private PaymentResult paymentResult;
 
-    public Reservation(LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuest, int amount) {
+    public Reservation(LocalDate checkInDate, LocalDate checkOutDate, LocalDate reservedDate, int numberOfGuest, int amount) {
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
+        this.reservedDate = reservedDate;
         this.numberOfGuest = numberOfGuest;
         this.amount = amount;
     }
@@ -64,6 +65,7 @@ public class Reservation {
     public void updateReservation(Member guest, Accommodation accommodation) {
         this.setGuest(guest);
         this.setAccommodation(accommodation);
+        accommodation.getReservations().add(this);
     }
 
     public void updatePayment(PaymentResult paymentResult) {

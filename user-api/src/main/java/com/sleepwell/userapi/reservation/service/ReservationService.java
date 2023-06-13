@@ -34,7 +34,7 @@ public class ReservationService {
         Accommodation accommodation = accommodationService.getAccommodation(accommodationId);
         Member guest = memberService.getMember(guestId);
 
-        if (reservationRepository.existsByAccommodationIdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(accommodationId, reservation.getCheckInDate(), reservation.getCheckOutDate())) {
+        if (reservationRepository.existsReservationInAccommodationThatDay(accommodationId, reservation.getCheckInDate(), reservation.getCheckOutDate())) {
             throw new BaseException(ErrorStatus.INVALID_RESERVATION_DATE);
         }
         if (accommodation.getMaximumNumberOfGuest() < reservation.getNumberOfGuest()) {
@@ -59,7 +59,7 @@ public class ReservationService {
     @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
     public void cancelNotPayedReservations() {
         log.info("{} - 미지불 고객 예약 취소 시작", LocalDateTime.now());
-        List<Reservation> reservations = reservationRepository.findByReservationStatusAndReservedDateLessThanEqual(ReservationStatus.BEFORE_PAYED, LocalDate.now().minusDays(PAYMENT_GRACE_PERIOD));
+        List<Reservation> reservations = reservationRepository.findByReservationStatusAndReservedDateGreaterThanEqual(ReservationStatus.BEFORE_PAYED, LocalDate.now().minusDays(PAYMENT_GRACE_PERIOD));
 
         for (Reservation reservation : reservations) {
             reservation.cancelReservation();
