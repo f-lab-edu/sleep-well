@@ -1,7 +1,6 @@
-package com.sleepwell.userapi.member;
+package com.sleepwell.userapi.member.repository;
 
 import com.sleepwell.userapi.member.entity.Member;
-import com.sleepwell.userapi.member.repository.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-public class MemberRepositoryTest {
+public class MemberRepositoryIntegrationTest {
 
     @Autowired
     private MemberRepository memberRepository;

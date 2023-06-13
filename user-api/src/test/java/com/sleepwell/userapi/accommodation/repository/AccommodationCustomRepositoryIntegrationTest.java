@@ -1,9 +1,7 @@
-package com.sleepwell.userapi.accommodation;
+package com.sleepwell.userapi.accommodation.repository;
 
 import com.sleepwell.userapi.accommodation.dto.AccommodationSearchDto;
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
-import com.sleepwell.userapi.accommodation.repository.AccommodationCustomRepository;
-import com.sleepwell.userapi.accommodation.repository.AccommodationRepository;
 import com.sleepwell.userapi.config.TestConfig;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import com.sleepwell.userapi.reservation.repository.ReservationRepository;
@@ -27,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(SpringExtension.class)
 @Import(TestConfig.class)
 @DataJpaTest
-public class AccommodationCustomRepositoryTest {
+public class AccommodationCustomRepositoryIntegrationTest {
 
     @Autowired
     private AccommodationRepository accommodationRepository;

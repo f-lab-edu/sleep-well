@@ -63,33 +63,17 @@ configurations {
     querydsl.extendsFrom compileClasspath
 }
 
-configurations {
-    integrationTestImplementation.extendsFrom implementation
-    integrationTestImplementation.extendsFrom testImplementation
-    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
-}
-
-sourceSets {
-    integrationTest {
-        java.srcDir "$projectDir/src/integrationtest/java"
-        resources.srcDir "$projectDir/src/integrationTest/resources"
-        compileClasspath += main.output + test.output
-        runtimeClasspath += main.output + test.output
+test {
+    filter {
+        excludeTestsMatching "*IntegrationTest"
     }
+    useJUnitPlatform()
 }
 
 tasks.register('integrationTest', Test) {
     group = 'verification'
-    testClassesDirs = sourceSets.integrationTest.output.classesDirs
-    classpath = sourceSets.integrationTest.runtimeClasspath
-    useJUnitPlatform()
-}
-
-
-check {
-    dependsOn integrationTest
-}
-
-test {
+    filter {
+        includeTestsMatching "*IntegrationTest"
+    }
     useJUnitPlatform()
 }

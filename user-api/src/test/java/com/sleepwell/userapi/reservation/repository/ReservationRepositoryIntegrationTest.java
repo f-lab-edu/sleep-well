@@ -1,4 +1,4 @@
-package com.sleepwell.userapi.reservation;
+package com.sleepwell.userapi.reservation.repository;
 
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import com.sleepwell.userapi.accommodation.repository.AccommodationRepository;
@@ -6,7 +6,6 @@ import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.member.repository.MemberRepository;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import com.sleepwell.userapi.reservation.entity.ReservationStatus;
-import com.sleepwell.userapi.reservation.repository.ReservationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -26,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-class ReservationRepositoryTest {
+class ReservationRepositoryIntegrationTest {
 
     @Autowired
     private MemberRepository memberRepository;
