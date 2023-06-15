@@ -17,9 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -53,7 +51,7 @@ class ReservationRepositoryIntegrationTest {
             checkOutDate = LocalDate.of(2023, 6, 10);
 
             Member member = memberRepository.save(new Member("사용자 이름", "email@email.com", "password"));
-            Reservation reservation = reservationRepository.save(new Reservation(checkInDate, checkOutDate, LocalDate.of(2023, 6, 8), 1, 1000));
+            Reservation reservation = reservationRepository.save(new Reservation(checkInDate, checkOutDate, LocalDate.of(2023, 6, 8), ReservationStatus.RESERVED, 1, 1000));
             accommodation = accommodationRepository.save(new Accommodation("숙소 이름", 1000, "HOTEL", "지역", LocalTime.of(11, 0), LocalTime.of(15, 0), 10, "세부사항"));
             reservation.updateReservation(member, accommodation);
         }
@@ -126,54 +124,6 @@ class ReservationRepositoryIntegrationTest {
 
             //then
             assertTrue(result);
-        }
-    }
-
-    @DisplayName("결제 상태가")
-    @Nested
-    class FindReservationStatusAndReservedDate {
-
-        private final int numberOfReservation = 7;
-
-        @BeforeEach
-        void setup() {
-            //given
-            for (int i = 0; i < numberOfReservation; i++) {
-                Reservation reservation = reservationRepository.save(new Reservation(LocalDate.of(2023, 6, 8), LocalDate.of(2023, 6, 10), LocalDate.of(2023, 6, 8), 1, 1000));
-                reservation.setReservationStatus(ReservationStatus.BEFORE_PAYED);
-            }
-        }
-
-        @DisplayName("일치하지 않는 예약은 조회되지 않는다.")
-        @Test
-        void withDifferentReservationStatus() {
-            //when
-            List<Reservation> result = reservationRepository.findByReservationStatusAndReservedDateGreaterThanEqual(ReservationStatus.RESERVED, LocalDate.of(2023, 6, 8));
-
-            //then
-            assertTrue(result.isEmpty());
-        }
-
-        @DisplayName("일치하지만, 특정 일자 이전의 예약은 조회되지 않는다.")
-        @Test
-        void withValidReservationStatusAndInValidReservedDate() {
-            //when
-            List<Reservation> result = reservationRepository.findByReservationStatusAndReservedDateGreaterThanEqual(ReservationStatus.BEFORE_PAYED, LocalDate.of(2023, 6, 10));
-
-            //then
-            assertTrue(result.isEmpty());
-        }
-
-        @DisplayName("일치하면, 특정 일자 이후의 예약 모두 조회")
-        @Test
-        void withValidReservationStatusAndValidReservedDate() {
-            //when
-            List<Reservation> result = reservationRepository.findByReservationStatusAndReservedDateGreaterThanEqual(ReservationStatus.BEFORE_PAYED, LocalDate.of(2023, 6, 8));
-
-            //then
-            assertEquals(result.size(), numberOfReservation);
-            assertEquals(ReservationStatus.BEFORE_PAYED, result.get(0).getReservationStatus());
-            assertTrue(result.get(0).getReservedDate().isAfter(LocalDate.of(2023, 6, 8)) || result.get(0).getReservedDate().isEqual(LocalDate.of(2023, 6, 8)));
         }
     }
 }

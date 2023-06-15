@@ -4,6 +4,7 @@ import com.sleepwell.userapi.accommodation.dto.AccommodationSearchDto;
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import com.sleepwell.userapi.config.TestConfig;
 import com.sleepwell.userapi.reservation.entity.Reservation;
+import com.sleepwell.userapi.reservation.entity.ReservationStatus;
 import com.sleepwell.userapi.reservation.repository.ReservationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +45,7 @@ public class AccommodationCustomRepositoryIntegrationTest {
         LocalDate checkOutDate = LocalDate.of(2023, 6, 10);
 
         for (int i = 5; i < 9; i++) {
-            Reservation reservation = reservationRepository.save(new Reservation(checkInDate, checkOutDate, reservedDate, 1, 1000));
+            Reservation reservation = reservationRepository.save(new Reservation(checkInDate, checkOutDate, reservedDate, ReservationStatus.RESERVED, 1, 1000));
             Accommodation accommodation = accommodationRepository.save(new Accommodation("숙소 이름" + (i % 2), i * 1000, "숙소 타입" + (i % 2), "지역" + (i % 2), LocalTime.of(15, 0), LocalTime.of(11, 0), i, "세부 정보"));
             accommodation.getReservations().add(reservation);
             reservation.setAccommodation(accommodation);
