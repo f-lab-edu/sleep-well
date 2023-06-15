@@ -11,6 +11,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -53,5 +55,26 @@ class MemberServiceTest {
         //then
         Member createdMember = memberService.createMember(member);
         assertEquals(member, createdMember);
+    }
+
+    @DisplayName("존재하지 않는 회원 조회 시 예외 발생")
+    @Test
+    void getMemberWithInvalidMemberId() {
+        //given
+        when(memberRepository.findById(any())).thenReturn(Optional.empty());
+
+        //then
+        assertThrows(BaseException.class, () -> memberService.getMember(1L));
+    }
+
+    @DisplayName("정상 회원 조회 시 회원 정보 반환")
+    @Test
+    void getMemberWithValidMemberId() {
+        //given
+        when(memberRepository.findById(any())).thenReturn(Optional.of(member));
+
+        //then
+        Member findMember = memberService.getMember(1L);
+        assertEquals(member, findMember);
     }
 }

@@ -44,6 +44,6 @@ public class AccommodationCreateRequestDto {
     private String description;
 
     public Accommodation toEntity() {
-        return new Accommodation(accommodationName, price, accommodationType, location, null, null, checkInTime, checkOutTime, maximumNumberOfGuest, description);
+        return new Accommodation(accommodationName, price, accommodationType, location, checkInTime, checkOutTime, maximumNumberOfGuest, description);
     }
 }
