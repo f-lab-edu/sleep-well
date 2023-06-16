@@ -24,7 +24,7 @@ public class JobScheduler {
     private final JobLauncher jobLauncher;
     private final JobConfiguration jobConfiguration;
 
-    @Scheduled(cron = "0 * * * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "* * 0 * * *", zone = "Asia/Seoul")
     @SchedulerLock(name = "cancelNotPayedReservationLock")
     public void cancelNotPayedReservations() {
         try {
