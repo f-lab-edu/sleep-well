@@ -1,5 +1,6 @@
 package com.sleepwell.userapi;
 
+import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,6 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableBatchProcessing
 @SpringBootApplication
+@EnableSchedulerLock(defaultLockAtMostFor = "10m")
 public class UserApiApplication {
 
     public static void main(String[] args) {
@@ -15,3 +17,4 @@ public class UserApiApplication {
     }
 
 }
+
