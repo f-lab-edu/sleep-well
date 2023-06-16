@@ -77,7 +77,7 @@ public class JobConfiguration {
 
     @Bean
     @StepScope
-    public ItemWriter<? super Reservation> cancelNotPayedReservationWriter() {
+    public ItemWriter<Reservation> cancelNotPayedReservationWriter() {
         return new JpaItemWriterBuilder<Reservation>()
                 .entityManagerFactory(entityManagerFactory)
                 .build();
