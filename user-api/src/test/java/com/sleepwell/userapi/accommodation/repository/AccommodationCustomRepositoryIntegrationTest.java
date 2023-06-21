@@ -2,6 +2,7 @@ package com.sleepwell.userapi.accommodation.repository;
 
 import com.sleepwell.userapi.accommodation.dto.AccommodationSearchDto;
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
+import com.sleepwell.userapi.accommodation.entity.Address;
 import com.sleepwell.userapi.config.TestConfig;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import com.sleepwell.userapi.reservation.entity.ReservationStatus;
@@ -47,7 +48,7 @@ public class AccommodationCustomRepositoryIntegrationTest {
 
         for (int i = 5; i < 9; i++) {
             Reservation reservation = reservationRepository.save(new Reservation(checkInDate, checkOutDate, reservedDate, ReservationStatus.RESERVED, 1, 1000));
-            Accommodation accommodation = accommodationRepository.save(new Accommodation("숙소 이름" + (i % 2), i * 1000, "숙소 타입" + (i % 2), "지역" + (i % 2), LocalTime.of(15, 0), LocalTime.of(11, 0), i, "세부 정보"));
+            Accommodation accommodation = accommodationRepository.save(new Accommodation("숙소 이름" + (i % 2), i * 1000, "숙소 타입" + (i % 2), new Address("도로명" + (i % 2), "상세 주소" + (i % 2), "우편번호" + (i % 2)), LocalTime.of(15, 0), LocalTime.of(11, 0), i, "세부 정보"));
             accommodation.getReservations().add(reservation);
             reservation.setAccommodation(accommodation);
         }
@@ -65,7 +66,7 @@ public class AccommodationCustomRepositoryIntegrationTest {
             @Test
             void withDifferentAccommodationName() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto("숙소 이름3", null, null, null, null, null, null, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().accommodationName("숙소 이름3").build());
 
                 //then
                 assertTrue(result.isEmpty());
@@ -75,7 +76,7 @@ public class AccommodationCustomRepositoryIntegrationTest {
             @Test
             void withEqualAccommodationName() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto("숙소 이름1", null, null, null, null, null, null, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().accommodationName("숙소 이름1").build());
 
                 //then
                 assertEquals(2, result.size());
@@ -91,7 +92,7 @@ public class AccommodationCustomRepositoryIntegrationTest {
             @Test
             void withDifferentAccommodationType() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, "숙소 타입3", null, null, null, null, null, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().accommodationType("숙소 타입3").build());
 
                 //then
                 assertTrue(result.isEmpty());
@@ -101,7 +102,7 @@ public class AccommodationCustomRepositoryIntegrationTest {
             @Test
             void withEqualAccommodationType() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, "숙소 타입1", null, null, null, null, null, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().accommodationType("숙소 타입1").build());
 
                 //then
                 assertEquals(2, result.size());
@@ -109,15 +110,15 @@ public class AccommodationCustomRepositoryIntegrationTest {
             }
         }
 
-        @DisplayName("지역이")
+        @DisplayName("도로명이")
         @Nested
-        class CheckLocation {
+        class CheckStreetAddress {
 
             @DisplayName("일치하는 숙소가 없으면, 빈 리스트 반환")
             @Test
             void withDifferentLocation() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, "지역3", null, null, null, null, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().streetAddress("도로명3").build());
 
                 //then
                 assertTrue(result.isEmpty());
@@ -127,11 +128,63 @@ public class AccommodationCustomRepositoryIntegrationTest {
             @Test
             void withEqualLocation() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, "지역1", null, null, null, null, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().streetAddress("도로명1").build());
 
                 //then
                 assertEquals(2, result.size());
-                assertEquals("지역1", result.get(0).getLocation());
+                assertEquals("도로명1", result.get(0).getAddress().getStreetAddress());
+            }
+        }
+
+        @DisplayName("상세 주소가")
+        @Nested
+        class CheckDetailAddress {
+
+            @DisplayName("일치하는 숙소가 없으면, 빈 리스트 반환")
+            @Test
+            void withDifferentLocation() {
+                //when
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().detailAddress("상세 주소3").build());
+
+                //then
+                assertTrue(result.isEmpty());
+            }
+
+            @DisplayName("일치하는 모든 숙소 반환")
+            @Test
+            void withEqualLocation() {
+                //when
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().detailAddress("상세 주소1").build());
+
+                //then
+                assertEquals(2, result.size());
+                assertEquals("상세 주소1", result.get(0).getAddress().getDetailAddress());
+            }
+        }
+
+        @DisplayName("우편번호가")
+        @Nested
+        class CheckPostcode {
+
+            @DisplayName("일치하는 숙소가 없으면, 빈 리스트 반환")
+            @Test
+            void withDifferentLocation() {
+                //when
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().postcode("우편번호3").build());
+
+                //then
+                assertTrue(result.isEmpty());
+            }
+
+            @DisplayName("일치하는 모든 숙소 반환")
+            @Test
+            void withEqualLocation() {
+                //when
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().postcode("우편번호1").build());
+
+                //then
+                assertEquals(2, result.size());
+                assertEquals("우편번호1", result.get(0).getAddress().getPostcode());
             }
         }
 
@@ -143,7 +196,7 @@ public class AccommodationCustomRepositoryIntegrationTest {
             @Test
             void withInvalidCheckInDate() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, null, LocalDate.of(2023, 6, 8), null, null, null, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().checkInDate(LocalDate.of(2023, 6, 8)).build());
 
                 //then
                 assertTrue(result.isEmpty());
@@ -153,7 +206,7 @@ public class AccommodationCustomRepositoryIntegrationTest {
             @Test
             void withInvalidCheckOutDate() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, null, null, LocalDate.of(2023, 6, 9), null, null, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().checkOutDate(LocalDate.of(2023, 6, 9)).build());
 
                 //then
                 assertTrue(result.isEmpty());
@@ -163,7 +216,7 @@ public class AccommodationCustomRepositoryIntegrationTest {
             @Test
             void withEqualAccommodationName() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, null, LocalDate.of(2022, 6, 8), LocalDate.of(2022, 6, 8), null, null, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().checkInDate(LocalDate.of(2023, 6, 8)).checkOutDate(LocalDate.of(2023, 6, 8)).build());
 
                 //then
                 assertEquals(4, result.size());
@@ -178,7 +231,7 @@ public class AccommodationCustomRepositoryIntegrationTest {
             @Test
             void withMinPrice() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, null, null, null, 6000, null, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().minPrice(6000).build());
 
                 //then
                 assertEquals(3, result.size());
@@ -189,7 +242,7 @@ public class AccommodationCustomRepositoryIntegrationTest {
             @Test
             void withInvalidCheckOutDate() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, null, null, null, null, 6000, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().maxPrice(6000).build());
 
                 //then
                 assertEquals(2, result.size());
@@ -200,7 +253,7 @@ public class AccommodationCustomRepositoryIntegrationTest {
             @Test
             void withEqualAccommodationName() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, null, null, null, 6000, 7000, null));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().minPrice(6000).maxPrice(7000).build());
 
                 //then
                 assertEquals(2, result.size());
@@ -217,7 +270,7 @@ public class AccommodationCustomRepositoryIntegrationTest {
             @Test
             void withMinPrice() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, null, null, null, null, null, 3));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().numberOfGuest(3).build());
 
                 //then
                 assertEquals(4, result.size());
@@ -228,7 +281,7 @@ public class AccommodationCustomRepositoryIntegrationTest {
             @Test
             void withInvalidCheckOutDate() {
                 //when
-                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto(null, null, null, null, null, null, null, 10));
+                List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(AccommodationSearchDto.builder().numberOfGuest(10).build());
 
                 //then
                 assertTrue(result.isEmpty());

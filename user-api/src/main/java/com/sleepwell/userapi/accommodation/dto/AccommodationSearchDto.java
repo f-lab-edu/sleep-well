@@ -1,12 +1,14 @@
 package com.sleepwell.userapi.accommodation.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 @Getter
+@Builder
 @AllArgsConstructor
 public class AccommodationSearchDto {
 
