@@ -6,6 +6,7 @@ import com.sleepwell.userapi.config.TestConfig;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import com.sleepwell.userapi.reservation.entity.ReservationStatus;
 import com.sleepwell.userapi.reservation.repository.ReservationRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -21,8 +24,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Import(TestConfig.class)
 @DataJpaTest
+@Import(TestConfig.class)
+@Transactional(value = "jpaTransactionManager")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class AccommodationCustomRepositoryIntegrationTest {
 
     @Autowired
@@ -49,6 +54,12 @@ public class AccommodationCustomRepositoryIntegrationTest {
         }
     }
 
+    @AfterEach
+    void after() {
+        reservationRepository.deleteAll();
+        accommodationRepository.deleteAll();
+    }
+
     @DisplayName("저장된 숙소 중")
     @Nested
     class FindAllByAccommodationSearchDto {
@@ -70,18 +81,6 @@ public class AccommodationCustomRepositoryIntegrationTest {
             @DisplayName("일치하는 모든 숙소 반환")
             @Test
             void withEqualAccommodationName() {
-                //given
-                LocalDate reservedDate = LocalDate.of(2023, 6, 8);
-                LocalDate checkInDate = LocalDate.of(2023, 6, 8);
-                LocalDate checkOutDate = LocalDate.of(2023, 6, 10);
-
-                for (int i = 5; i < 9; i++) {
-                    Reservation reservation = reservationRepository.save(new Reservation(checkInDate, checkOutDate, reservedDate, ReservationStatus.RESERVED, 1, 1000));
-                    Accommodation accommodation = accommodationRepository.save(new Accommodation("숙소 이름" + (i % 2), i * 1000, "숙소 타입" + (i % 2), "지역" + (i % 2), LocalTime.of(15, 0), LocalTime.of(11, 0), i, "세부 정보"));
-                    accommodation.getReservations().add(reservation);
-                    reservation.setAccommodation(accommodation);
-                }
-
                 //when
                 List<Accommodation> result = accommodationCustomRepository.findAllByAccommodationSearchDto(new AccommodationSearchDto("숙소 이름1", null, null, null, null, null, null, null));
 
