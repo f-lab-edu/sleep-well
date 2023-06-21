@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,7 +39,8 @@ public class Accommodation {
 
     private String accommodationType;
 
-    private String location;
+    @Embedded
+    private Address address;
 
     private LocalTime checkInTime;
 
@@ -56,11 +58,11 @@ public class Accommodation {
     @OneToMany(mappedBy = "accommodation")
     private List<Reservation> reservations = new ArrayList<>();
 
-    public Accommodation(String accommodationName, int price, String accommodationType, String location, LocalTime checkInTime, LocalTime checkOutTime, int maximumNumberOfGuest, String description) {
+    public Accommodation(String accommodationName, int price, String accommodationType, Address address, LocalTime checkInTime, LocalTime checkOutTime, int maximumNumberOfGuest, String description) {
         this.accommodationName = accommodationName;
         this.price = price;
         this.accommodationType = accommodationType;
-        this.location = location;
+        this.address = address;
         this.checkInTime = checkInTime;
         this.checkOutTime = checkOutTime;
         this.maximumNumberOfGuest = maximumNumberOfGuest;

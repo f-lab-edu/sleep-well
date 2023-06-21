@@ -1,5 +1,6 @@
 package com.sleepwell.userapi.reservation.dto;
 
+import com.sleepwell.userapi.accommodation.entity.Address;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import com.sleepwell.userapi.reservation.entity.ReservationStatus;
 import lombok.Builder;
@@ -27,7 +28,7 @@ public class ReservationDetailInfoDto {
 
     private final String accommodationType;
 
-    private final String location;
+    private final Address address;
 
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private final LocalDate checkInDate;
@@ -54,7 +55,7 @@ public class ReservationDetailInfoDto {
                 .guestName(reservation.getGuest().getName())
                 .price(reservation.getAccommodation().getPrice())
                 .accommodationType(reservation.getAccommodation().getAccommodationType())
-                .location(reservation.getAccommodation().getLocation())
+                .address(reservation.getAccommodation().getAddress())
                 .checkInDate(reservation.getCheckInDate())
                 .checkOutDate(reservation.getCheckOutDate())
                 .checkInTime(reservation.getAccommodation().getCheckInTime())

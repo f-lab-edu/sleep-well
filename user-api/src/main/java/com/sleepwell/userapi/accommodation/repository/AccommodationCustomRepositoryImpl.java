@@ -4,6 +4,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sleepwell.userapi.accommodation.dto.AccommodationSearchDto;
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
+import com.sleepwell.userapi.accommodation.entity.Address;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static com.sleepwell.userapi.accommodation.entity.QAccommodation.accommodation;
+import static com.sleepwell.userapi.accommodation.entity.QAddress.address;
 
 @Repository
 @RequiredArgsConstructor
@@ -24,7 +26,7 @@ public class AccommodationCustomRepositoryImpl implements AccommodationCustomRep
                 .selectFrom(accommodation)
                 .where(nameEq(accommodationSearchDto.getAccommodationName()),
                         typeEq(accommodationSearchDto.getAccommodationType()),
-                        locationEq(accommodationSearchDto.getLocation()),
+                        addressEq(accommodationSearchDto.getStreetAddress(), accommodationSearchDto.getDetailAddress(), accommodationSearchDto.getPostcode()),
                         notExistsReservationBetweenDates(accommodationSearchDto.getCheckInDate(), accommodationSearchDto.getCheckOutDate()),
                         priceBetween(accommodationSearchDto.getMinPrice(), accommodationSearchDto.getMaxPrice()),
                         numberOfGuestGoe(accommodationSearchDto.getNumberOfGuest()))
@@ -40,8 +42,14 @@ public class AccommodationCustomRepositoryImpl implements AccommodationCustomRep
         return accommodationType != null ? accommodation.accommodationType.eq(accommodationType) : null;
     }
 
-    private BooleanExpression locationEq(String location) {
-        return location != null ? accommodation.location.eq(location) : null;
+    private BooleanExpression addressEq(String streetAddress, String detailAddress, String postcode) {
+        return address.streetAddress.eq(streetAddress)
+                .and(address.detailAddress.eq(detailAddress))
+                .and(address.postcode.eq(postcode));
+    }
+
+    private BooleanExpression addressEq(Address address) {
+        return address != null ? accommodation.address.eq(address) : null;
     }
 
     private BooleanExpression notExistsReservationBetweenDates(LocalDate checkInDate, LocalDate checkOutDate) {

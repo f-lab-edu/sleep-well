@@ -1,6 +1,7 @@
 package com.sleepwell.userapi.accommodation.dto;
 
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
+import com.sleepwell.userapi.accommodation.entity.Address;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,7 +29,13 @@ public class AccommodationCreateRequestDto {
     private String accommodationType;
 
     @NotBlank
-    private String location;
+    private String streetAddress;
+
+    @NotBlank
+    private String detailAddress;
+
+    @NotBlank
+    private String postcode;
 
     @NotNull
     @DateTimeFormat(pattern = "kk:mm")
@@ -44,6 +51,6 @@ public class AccommodationCreateRequestDto {
     private String description;
 
     public Accommodation toEntity() {
-        return new Accommodation(accommodationName, price, accommodationType, location, checkInTime, checkOutTime, maximumNumberOfGuest, description);
+        return new Accommodation(accommodationName, price, accommodationType, new Address(streetAddress, detailAddress, postcode), checkInTime, checkOutTime, maximumNumberOfGuest, description);
     }
 }

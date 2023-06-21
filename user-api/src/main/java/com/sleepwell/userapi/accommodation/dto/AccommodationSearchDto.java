@@ -14,7 +14,11 @@ public class AccommodationSearchDto {
 
     private final String accommodationType;
 
-    private final String location;
+    private final String streetAddress;
+
+    private final String detailAddress;
+
+    private final String postcode;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private final LocalDate checkInDate;
