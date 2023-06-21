@@ -1,6 +1,7 @@
 package com.sleepwell.userapi.reservation.service;
 
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
+import com.sleepwell.userapi.accommodation.entity.Address;
 import com.sleepwell.userapi.accommodation.service.AccommodationService;
 import com.sleepwell.userapi.error.exception.BaseException;
 import com.sleepwell.userapi.member.entity.Member;
@@ -51,7 +52,7 @@ class ReservationServiceTest {
     void setup() {
         member = mock(Member.class);
 
-        accommodation = new Accommodation("숙소 이름", 1_000_000, "숙소 타입", "지역", LocalTime.of(15, 0), LocalTime.of(11, 0), 10, "상세 정보");
+        accommodation = new Accommodation("숙소 이름", 1_000_000, "숙소 타입", mock(Address.class), LocalTime.of(15, 0), LocalTime.of(11, 0), 10, "상세 정보");
 
         reservation = new Reservation(LocalDate.of(2023, 4, 24), LocalDate.of(2023, 4, 24), LocalDate.now(), ReservationStatus.BEFORE_PAYED, 10, 100);
     }

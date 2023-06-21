@@ -1,6 +1,7 @@
 package com.sleepwell.userapi.reservation.repository;
 
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
+import com.sleepwell.userapi.accommodation.entity.Address;
 import com.sleepwell.userapi.accommodation.repository.AccommodationRepository;
 import com.sleepwell.userapi.config.TestConfig;
 import com.sleepwell.userapi.member.entity.Member;
@@ -22,6 +23,7 @@ import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 @DataJpaTest
 @Import(TestConfig.class)
@@ -56,7 +58,7 @@ class ReservationRepositoryIntegrationTest {
 
             Member member = memberRepository.save(new Member("사용자 이름", "email@email.com", "password"));
             Reservation reservation = reservationRepository.save(new Reservation(checkInDate, checkOutDate, LocalDate.of(2023, 6, 8), ReservationStatus.RESERVED, 1, 1000));
-            accommodation = accommodationRepository.save(new Accommodation("숙소 이름", 1000, "HOTEL", "지역", LocalTime.of(11, 0), LocalTime.of(15, 0), 10, "세부사항"));
+            accommodation = accommodationRepository.save(new Accommodation("숙소 이름", 1000, "HOTEL", mock(Address.class), LocalTime.of(11, 0), LocalTime.of(15, 0), 10, "세부사항"));
             reservation.updateReservation(member, accommodation);
         }
 

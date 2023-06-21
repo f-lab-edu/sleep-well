@@ -24,7 +24,9 @@ public class AccommodationCustomRepositoryImpl implements AccommodationCustomRep
                 .selectFrom(accommodation)
                 .where(nameEq(accommodationSearchDto.getAccommodationName()),
                         typeEq(accommodationSearchDto.getAccommodationType()),
-                        locationEq(accommodationSearchDto.getLocation()),
+                        streetAddressEq(accommodationSearchDto.getStreetAddress()),
+                        detailAddressEq(accommodationSearchDto.getDetailAddress()),
+                        postcodeEq(accommodationSearchDto.getPostcode()),
                         notExistsReservationBetweenDates(accommodationSearchDto.getCheckInDate(), accommodationSearchDto.getCheckOutDate()),
                         priceBetween(accommodationSearchDto.getMinPrice(), accommodationSearchDto.getMaxPrice()),
                         numberOfGuestGoe(accommodationSearchDto.getNumberOfGuest()))
@@ -40,8 +42,16 @@ public class AccommodationCustomRepositoryImpl implements AccommodationCustomRep
         return accommodationType != null ? accommodation.accommodationType.eq(accommodationType) : null;
     }
 
-    private BooleanExpression locationEq(String location) {
-        return location != null ? accommodation.location.eq(location) : null;
+    private BooleanExpression streetAddressEq(String streetAddress) {
+        return streetAddress != null ? accommodation.address.streetAddress.eq(streetAddress) : null;
+    }
+
+    private BooleanExpression detailAddressEq(String detailAddress) {
+        return detailAddress != null ? accommodation.address.detailAddress.eq(detailAddress) : null;
+    }
+
+    private BooleanExpression postcodeEq(String postcode) {
+        return postcode != null ? accommodation.address.postcode.eq(postcode) : null;
     }
 
     private BooleanExpression notExistsReservationBetweenDates(LocalDate checkInDate, LocalDate checkOutDate) {
