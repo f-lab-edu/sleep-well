@@ -6,7 +6,6 @@ import com.sleepwell.userapi.config.TestConfig;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import com.sleepwell.userapi.reservation.entity.ReservationStatus;
 import com.sleepwell.userapi.reservation.repository.ReservationRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -52,12 +51,6 @@ public class AccommodationCustomRepositoryIntegrationTest {
             accommodation.getReservations().add(reservation);
             reservation.setAccommodation(accommodation);
         }
-    }
-
-    @AfterEach
-    void after() {
-        reservationRepository.deleteAll();
-        accommodationRepository.deleteAll();
     }
 
     @DisplayName("저장된 숙소 중")
