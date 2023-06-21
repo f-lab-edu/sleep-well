@@ -2,6 +2,7 @@ package com.sleepwell.userapi.reservation.repository;
 
 import com.sleepwell.userapi.accommodation.entity.Accommodation;
 import com.sleepwell.userapi.accommodation.repository.AccommodationRepository;
+import com.sleepwell.userapi.config.TestConfig;
 import com.sleepwell.userapi.member.entity.Member;
 import com.sleepwell.userapi.member.repository.MemberRepository;
 import com.sleepwell.userapi.reservation.entity.Reservation;
@@ -12,6 +13,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,6 +24,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
+@Import(TestConfig.class)
+@Transactional(value = "jpaTransactionManager")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ReservationRepositoryIntegrationTest {
 
     @Autowired
@@ -124,3 +131,5 @@ class ReservationRepositoryIntegrationTest {
         }
     }
 }
+
+

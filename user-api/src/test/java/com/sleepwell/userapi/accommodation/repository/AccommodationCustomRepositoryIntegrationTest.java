@@ -6,6 +6,7 @@ import com.sleepwell.userapi.config.TestConfig;
 import com.sleepwell.userapi.reservation.entity.Reservation;
 import com.sleepwell.userapi.reservation.entity.ReservationStatus;
 import com.sleepwell.userapi.reservation.repository.ReservationRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -21,8 +24,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Import(TestConfig.class)
 @DataJpaTest
+@Import(TestConfig.class)
+@Transactional(value = "jpaTransactionManager")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class AccommodationCustomRepositoryIntegrationTest {
 
     @Autowired
@@ -47,6 +52,12 @@ public class AccommodationCustomRepositoryIntegrationTest {
             accommodation.getReservations().add(reservation);
             reservation.setAccommodation(accommodation);
         }
+    }
+
+    @AfterEach
+    void after() {
+        reservationRepository.deleteAll();
+        accommodationRepository.deleteAll();
     }
 
     @DisplayName("저장된 숙소 중")
