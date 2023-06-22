@@ -24,7 +24,7 @@ public class JobScheduler {
     private final JobLauncher jobLauncher;
     private final JobConfiguration jobConfiguration;
 
-    @Scheduled(cron = "* * * 0 * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "* * 0 * * *", zone = "Asia/Seoul")
     public void cancelNotPayedReservations() {
         try {
             logProducer.send(new LogMessage("미결제 예약에 대한 취소 배치 작업 시작", LogLevel.INFO));
