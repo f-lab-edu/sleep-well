@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class LogProducer {
 
     private final KafkaTemplate<String, LogMessage> logMessageKafkaTemplate;
-    
+
     private static final String TOPIC_NAME = "log-topic";
 
     public void send(LogMessage message) {
