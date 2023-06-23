@@ -21,13 +21,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BaseException.class)
     public ResponseEntity<String> baseExceptionHandle(BaseException e) {
-        logProducer.send(new LogMessage(String.format("%s - %s", e.getMessage(), e.getStackTrace()), LogLevel.DEBUG));
+        logProducer.send(new LogMessage(LogMessage.convertExceptionToString(e), LogLevel.DEBUG));
         return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> unexpectedExceptionHandle(Exception e) {
-        logProducer.send(new LogMessage(String.format("%s - %s", e.getMessage(), e.getStackTrace()), LogLevel.ERROR));
+        logProducer.send(new LogMessage(LogMessage.convertExceptionToString(e), LogLevel.ERROR));
         return ResponseEntity.status(ErrorStatus.UNEXPECTED_EXCEPTION.getStatusCode()).body(ErrorStatus.UNEXPECTED_EXCEPTION.getMessage());
     }
 }
