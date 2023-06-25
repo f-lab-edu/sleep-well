@@ -68,15 +68,7 @@ public class AccommodationCustomRepositoryImpl implements AccommodationCustomRep
     }
 
     private BooleanExpression priceBetween(Integer minPrice, Integer maxPrice) {
-        if (minPrice == null && maxPrice == null) {
-            return null;
-        } else if (minPrice == null) {
-            return accommodation.price.loe(maxPrice);
-        } else if (maxPrice == null) {
-            return accommodation.price.goe(minPrice);
-        }
-
-        return accommodation.price.between(minPrice, maxPrice);
+        return minPrice == null && maxPrice == null ? null : accommodation.price.between(minPrice, maxPrice);
     }
 
     private BooleanExpression numberOfGuestGoe(Integer numberOfGuest) {
