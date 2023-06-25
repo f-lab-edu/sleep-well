@@ -30,7 +30,6 @@ public class AccommodationCustomRepositoryImpl implements AccommodationCustomRep
                         notExistsReservationBetweenDates(accommodationSearchDto.getCheckInDate(), accommodationSearchDto.getCheckOutDate()),
                         priceBetween(accommodationSearchDto.getMinPrice(), accommodationSearchDto.getMaxPrice()),
                         numberOfGuestGoe(accommodationSearchDto.getNumberOfGuest()))
-                .distinct()
                 .fetch();
     }
 
