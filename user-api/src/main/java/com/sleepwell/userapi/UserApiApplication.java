@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableFeignClients
 @EnableBatchProcessing
-@SpringBootApplication(scanBasePackages = "com.sleepwell")
+@SpringBootApplication
 public class UserApiApplication {
 
     public static void main(String[] args) {
