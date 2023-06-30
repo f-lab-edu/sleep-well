@@ -9,6 +9,10 @@ jwt:
     header: ACCESS_TOKEN
     prefix: Bearer
 
+kafka:
+  broker:
+    port: localhost:9099
+
 spring:
   datasource:
     url: jdbc:h2:tcp://localhost/~/test
@@ -24,3 +28,5 @@ spring:
 logging:
   level:
     org.hibernate.type: trace
+server:
+  port: 9090
