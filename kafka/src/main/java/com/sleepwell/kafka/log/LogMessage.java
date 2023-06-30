@@ -1,4 +1,4 @@
-package com.sleepwell.userapi.log;
+package com.sleepwell.kafka.log;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

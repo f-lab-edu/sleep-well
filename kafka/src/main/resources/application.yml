@@ -1,0 +1,6 @@
+kafka:
+  broker:
+    port: localhost:9099
+
+server:
+  port: 9001

@@ -1,6 +1,5 @@
-package com.sleepwell.userapi.log.kafka;
+package com.sleepwell.kafka.log;
 
-import com.sleepwell.userapi.log.LogMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.kafka.annotation.KafkaListener;

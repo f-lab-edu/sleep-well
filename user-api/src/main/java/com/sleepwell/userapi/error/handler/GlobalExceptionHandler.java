@@ -1,18 +1,16 @@
 package com.sleepwell.userapi.error.handler;
 
+import com.sleepwell.kafka.log.LogMessage;
+import com.sleepwell.kafka.log.LogProducer;
 import com.sleepwell.userapi.error.ErrorStatus;
 import com.sleepwell.userapi.error.exception.BaseException;
-import com.sleepwell.userapi.log.LogMessage;
-import com.sleepwell.userapi.log.kafka.LogProducer;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@Slf4j
 @RequiredArgsConstructor
 @RestControllerAdvice(annotations = RestController.class)
 public class GlobalExceptionHandler {

@@ -1,8 +1,8 @@
 package com.sleepwell.userapi.util;
 
+import com.sleepwell.kafka.log.LogMessage;
+import com.sleepwell.kafka.log.LogProducer;
 import com.sleepwell.userapi.config.JobConfiguration;
-import com.sleepwell.userapi.log.LogMessage;
-import com.sleepwell.userapi.log.kafka.LogProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.JobParameters;
@@ -24,7 +24,7 @@ public class JobScheduler {
     private final JobLauncher jobLauncher;
     private final JobConfiguration jobConfiguration;
 
-    @Scheduled(cron = "* * 0 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 * * * * *", zone = "Asia/Seoul")
     public void cancelNotPayedReservations() {
         try {
             logProducer.send(new LogMessage("미결제 예약에 대한 취소 배치 작업 시작", LogLevel.INFO));
