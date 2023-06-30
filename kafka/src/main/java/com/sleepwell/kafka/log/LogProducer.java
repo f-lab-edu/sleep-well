@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LogProducer {
 
-    private KafkaTemplate<String, LogMessage> logMessageKafkaTemplate;
+    private final KafkaTemplate<String, LogMessage> logMessageKafkaTemplate;
 
     private static final String TOPIC_NAME = "log-topic";
 
