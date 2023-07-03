@@ -16,28 +16,25 @@ services:
     restart: always
 
   zookeeper:
-    image: bitnami/zookeeper:3.7
-    networks:
-      - kafka-net
-    ports:
-      - '2181:2181'
+    image: confluentinc/cp-zookeeper
+    container_name: zookeeper
     environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
 
-  #TODO: kafka connect error 수리
   kafka:
-    image: bitnami/kafka:3.1.2
-    networks:
-      - kafka-net
+    container_name: kafka
+    hostname: kafka
+    image: confluentinc/cp-kafka
     ports:
-      - '9093:9093'
+      - 9092:9092
     environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
-      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
-      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9093,EXTERNAL://localhost:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     depends_on:
       - zookeeper
 
@@ -45,13 +42,12 @@ services:
     build: "./user-api"
     container_name: "sleep-well-user-api"
     ports:
-      - "8080:8080"
+      - "9000:9000"
     environment:
       SPRING_DATASOURCE_URL: jdbc:h2:mem:test
       SPRING_DATASOURCE_USERNAME: sa
     depends_on:
       - db
-      - zookeeper
       - kafka
 
   # TODO: kafka server 분리

@@ -11,7 +11,7 @@ jwt:
 
 kafka:
   broker:
-    port: localhost:9093
+    port: kafka:9093
 
 spring:
   datasource:
@@ -28,3 +28,5 @@ spring:
 logging:
   level:
     org.hibernate.type: trace
+server:
+  port: 9000
