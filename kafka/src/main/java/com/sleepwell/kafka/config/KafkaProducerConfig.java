@@ -1,6 +1,6 @@
 package com.sleepwell.kafka.config;
 
-import com.sleepwell.kafka.log.LogMessage;
+import com.sleepwell.common.message.LogMessage;
 import lombok.Setter;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;

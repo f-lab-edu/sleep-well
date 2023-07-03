@@ -1,7 +1,7 @@
 package com.sleepwell.userapi.util;
 
+import com.sleepwell.common.message.LogMessage;
 import com.sleepwell.userapi.client.LogFeignClient;
-import com.sleepwell.userapi.client.dto.LogMessage;
 import com.sleepwell.userapi.config.JobConfiguration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.sleepwell.userapi.client.dto;
+package com.sleepwell.common.message;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,6 @@ import org.springframework.boot.logging.LogLevel;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-//TODO: 공통 모듈에서 메시지 객체를 관리하도록 변경 예정
 @Getter
 @NoArgsConstructor
 public class LogMessage {

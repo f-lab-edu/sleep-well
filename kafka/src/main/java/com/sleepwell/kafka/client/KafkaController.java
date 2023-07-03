@@ -1,6 +1,6 @@
 package com.sleepwell.kafka.client;
 
-import com.sleepwell.kafka.log.LogMessage;
+import com.sleepwell.common.message.LogMessage;
 import com.sleepwell.kafka.log.LogProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.sleepwell.userapi.error.handler;
 
+import com.sleepwell.common.message.LogMessage;
 import com.sleepwell.userapi.client.LogFeignClient;
-import com.sleepwell.userapi.client.dto.LogMessage;
 import com.sleepwell.userapi.error.ErrorStatus;
 import com.sleepwell.userapi.error.exception.BaseException;
 import lombok.RequiredArgsConstructor;
