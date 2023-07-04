@@ -1,6 +1,5 @@
-package com.sleepwell.userapi.log;
+package com.sleepwell.common.message;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.logging.LogLevel;
@@ -10,14 +9,23 @@ import java.io.StringWriter;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class LogMessage {
 
     private String message;
 
     private LogLevel logLevel;
 
-    public static String convertExceptionToString(Exception e) {
+    public LogMessage(Exception exception, LogLevel logLevel) {
+        this.message = convertExceptionToString(exception);
+        this.logLevel = logLevel;
+    }
+
+    public LogMessage(String message, LogLevel logLevel) {
+        this.message = message;
+        this.logLevel = logLevel;
+    }
+
+    private String convertExceptionToString(Exception e) {
         StringWriter sw = new StringWriter();
         e.printStackTrace(new PrintWriter(sw));
         return sw.toString();

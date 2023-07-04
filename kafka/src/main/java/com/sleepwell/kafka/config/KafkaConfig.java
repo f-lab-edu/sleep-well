@@ -1,4 +1,4 @@
-package com.sleepwell.userapi.config;
+package com.sleepwell.kafka.config;
 
 import lombok.Setter;
 import org.apache.kafka.clients.admin.AdminClientConfig;

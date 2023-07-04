@@ -1,8 +1,8 @@
 package com.sleepwell.userapi.util;
 
+import com.sleepwell.common.message.LogMessage;
 import com.sleepwell.userapi.config.JobConfiguration;
-import com.sleepwell.userapi.log.LogMessage;
-import com.sleepwell.userapi.log.kafka.LogProducer;
+import com.sleepwell.userapi.log.LogProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.JobParameters;
@@ -20,19 +20,19 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class JobScheduler {
 
-    private final LogProducer logProducer;
     private final JobLauncher jobLauncher;
     private final JobConfiguration jobConfiguration;
+    private final LogProducer logProducer;
 
     @Scheduled(cron = "* * 0 * * *", zone = "Asia/Seoul")
     public void cancelNotPayedReservations() {
         try {
-            logProducer.send(new LogMessage("미결제 예약에 대한 취소 배치 작업 시작", LogLevel.INFO));
+            logProducer.send(new LogMessage("미결제 예약에 대한 취소 배치 작업 시작", LogLevel.DEBUG));
             jobLauncher.run(jobConfiguration.cancelNotPayedReservationJob(), new JobParameters());
-            logProducer.send(new LogMessage("미결제 예약에 대한 취소 배치 작업 정상 종료", LogLevel.INFO));
+            logProducer.send(new LogMessage("미결제 예약에 대한 취소 배치 작업 종료", LogLevel.DEBUG));
         } catch (JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException |
                  JobParametersInvalidException e) {
-            logProducer.send(new LogMessage("미결제 예약에 대한 취소 배치 작업 비정상 종료 : " + e.getMessage(), LogLevel.INFO));
+            logProducer.send(new LogMessage("미결제 예약에 대한 취소 배치 작업 비정상 종료", LogLevel.DEBUG));
         }
     }
 }

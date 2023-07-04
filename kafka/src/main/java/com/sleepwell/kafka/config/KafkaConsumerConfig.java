@@ -1,6 +1,6 @@
-package com.sleepwell.userapi.config;
+package com.sleepwell.kafka.config;
 
-import com.sleepwell.userapi.log.LogMessage;
+import com.sleepwell.common.message.LogMessage;
 import lombok.Setter;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

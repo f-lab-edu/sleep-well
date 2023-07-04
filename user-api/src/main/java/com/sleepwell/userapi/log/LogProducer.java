@@ -1,6 +1,6 @@
-package com.sleepwell.userapi.log.kafka;
+package com.sleepwell.userapi.log;
 
-import com.sleepwell.userapi.log.LogMessage;
+import com.sleepwell.common.message.LogMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;

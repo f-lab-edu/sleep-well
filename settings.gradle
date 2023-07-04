@@ -1,2 +1,4 @@
 rootProject.name = 'sleep-well'
 include 'user-api'
+include 'kafka'
+include 'common'
