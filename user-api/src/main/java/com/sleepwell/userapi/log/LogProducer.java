@@ -1,4 +1,4 @@
-package com.sleepwell.kafka.log;
+package com.sleepwell.userapi.log;
 
 import com.sleepwell.common.message.LogMessage;
 import lombok.RequiredArgsConstructor;
