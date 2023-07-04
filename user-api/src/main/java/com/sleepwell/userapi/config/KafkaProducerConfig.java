@@ -1,4 +1,4 @@
-package com.sleepwell.kafka.config;
+package com.sleepwell.userapi.config;
 
 import com.sleepwell.common.message.LogMessage;
 import lombok.Setter;

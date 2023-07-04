@@ -17,6 +17,7 @@ public class LogConsumer {
             containerFactory = "logMessageConcurrentKafkaListenerContainerFactory"
     )
     public void listen(@Payload LogMessage logMessage) {
+        System.out.println(1);
         if (logMessage.getLogLevel() == LogLevel.INFO) {
             log.info(logMessage.getMessage());
         } else if (logMessage.getLogLevel() == LogLevel.TRACE) {
